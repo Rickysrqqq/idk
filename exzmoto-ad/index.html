@@ -92,13 +92,7 @@ body.dark #badge{background:#14172a;border-color:#2a3050;color:#dfe5ff}
 
  <!-- S4 -->
  <div class="scene" id="s4">
-  <div class="abs" id="s4w" style="left:50px;top:290px;width:440px;height:440px;perspective:900px">
-   <div id="s4rot" style="position:absolute;inset:0;transform-style:preserve-3d">
-    <div id="s4a" style="position:absolute;inset:0;overflow:hidden"><img id="s4aimg" src="assets/br_black.png" style="width:440px;height:440px;filter:drop-shadow(0 30px 24px rgba(0,0,0,.25))"></div>
-    <div id="s4b" style="position:absolute;inset:0;overflow:hidden"><img src="assets/br_silver.png" style="width:440px;height:440px"></div>
-    <div id="s4g" style="position:absolute;inset:0;-webkit-mask-image:url(assets/br_black.png);-webkit-mask-size:440px 440px"></div>
-   </div>
-  </div>
+  <div class="abs" id="s4w" style="left:0;top:262px;width:540px;height:520px"><canvas id="c4" style="width:540px;height:520px"></canvas></div>
   <div class="pill light" id="s4p0" style="left:24px;top:770px;font-size:13px">Ultra Bee</div>
   <div class="pill light" id="s4p1" style="left:140px;top:770px;font-size:13px">Light Bee X</div>
   <div class="pill light" id="s4p2" style="left:278px;top:770px;font-size:13px">Talaria</div>
@@ -112,7 +106,7 @@ body.dark #badge{background:#14172a;border-color:#2a3050;color:#dfe5ff}
   <div class="abs" id="s5L" style="left:24px;top:320px;width:240px;height:240px">
    <svg viewBox="0 0 240 240" width="240" height="240"><polygon fill="#9aa1ad" stroke="#7b828f" stroke-width="2" points="30,40 52,34 70,44 96,36 124,46 150,38 172,52 180,86 168,100 188,128 200,150 186,176 170,206 140,196 118,214 92,200 70,212 48,192 56,160 38,138 46,112 28,92 36,66"/><circle cx="62" cy="62" r="12" fill="#f3f5f8" stroke="#7b828f"/><circle cx="150" cy="70" r="12" fill="#f3f5f8" stroke="#7b828f"/><circle cx="104" cy="150" r="14" fill="#f3f5f8" stroke="#7b828f"/></svg>
   </div>
-  <div class="abs" id="s5R" style="left:276px;top:320px;width:240px;height:240px;overflow:hidden"><img src="assets/br_silver.png" style="width:240px;height:240px"></div>
+  <div class="abs" id="s5R" style="left:276px;top:320px;width:240px;height:240px"><canvas id="c5" style="width:240px;height:240px"></canvas></div>
   <div class="abs" id="s5ar1" style="left:132px;top:290px;font-size:34px;color:var(--red);font-weight:900">↓</div>
   <div class="abs" id="s5ar2" style="left:384px;top:290px;font-size:34px;color:var(--green);font-weight:900">↓</div>
   <div id="s5rows"></div>
@@ -120,7 +114,7 @@ body.dark #badge{background:#14172a;border-color:#2a3050;color:#dfe5ff}
 
  <!-- S6 -->
  <div class="scene" id="s6">
-  <div class="card img" id="s6a" style="left:24px;top:290px;width:240px;height:300px;background:#f1f3f7"><img src="assets/br_black.png" style="width:240px;height:240px;margin-top:30px"></div>
+  <div class="card img" id="s6a" style="left:24px;top:290px;width:240px;height:300px;background:#f1f3f7"><canvas id="c6" style="width:240px;height:300px"></canvas></div>
   <div class="card img" id="s6b" style="left:276px;top:290px;width:240px;height:300px;background-image:url(assets/rg_black.jpg);background-size:auto 300px;background-position:-95px 0"></div>
   <div id="s6pills"></div>
  </div>
@@ -139,6 +133,27 @@ body.dark #badge{background:#14172a;border-color:#2a3050;color:#dfe5ff}
  <svg id="cursor" viewBox="0 0 24 24"><path d="M4 2l15 9-6.5 1.5L9 19z" fill="#111" stroke="#fff" stroke-width="1.5" stroke-linejoin="round"/></svg>
 </div>
 
+<script type="importmap">{"imports":{"three":"./lib/three.module.js","three/addons/":"./lib/addons/"}}</script>
+<script type="module">
+import {loadOutline,buildBracket,makeScene} from './lib/bracket.js';
+const o=await loadOutline();
+function mk(id,w,h,dpr){
+  const S=makeScene(document.getElementById(id),w,h,'assets/br_black.png',{dpr});
+  const T=S.THREE, tl=new T.TextureLoader();
+  const ts=tl.load('assets/br_silver.png');ts.colorSpace=T.SRGBColorSpace;ts.anisotropy=8;
+  const mb=buildBracket(o,S.tex,{anod:0x0b0b0e}), ms=buildBracket(o,ts,{anod:0xaab0bb});
+  S.scene.add(mb,ms);
+  const gl=new T.PointLight(0xffffff,0,6,1.2);gl.position.set(-2,1,1.5);S.scene.add(gl);
+  return p=>{
+    const m=p.variant==='silver'?ms:mb;mb.visible=m===mb;ms.visible=m===ms;
+    m.rotation.set(p.rx||0,p.ry||0,0);m.scale.setScalar(p.scale||1);m.position.y=p.y||0;
+    const g=p.glint??-1;gl.intensity=g<0?0:Math.max(0,Math.sin(g*Math.PI))*60;gl.position.x=-2+g*4;
+    const z=p.zoom||0;S.cam.position.set(.05*z,.15*z,2.45-z*.6);S.cam.lookAt(.05*z,.15*z,0);
+    S.r.render(S.scene,S.cam);};
+}
+window.B3={s4:mk('c4',540,520,2),s5:mk('c5',240,240,2),s6:mk('c6',240,300,2)};
+window.B3ready=true;
+</script>
 <script>
 const $=id=>document.getElementById(id);
 const cl=(x,a=0,b=1)=>Math.min(b,Math.max(a,x));
@@ -235,19 +250,13 @@ function render(t){
  // ---- S4
  setScene('s4',win(t,13,19.1,.2));
  {const sc=t-13;const p=eb(P(sc,.2,.6));
-  const rot=Math.sin(sc*1.1)*38;$('s4rot').style.transform=`rotateY(${rot}deg) rotateZ(${Math.sin(sc*.8)*4}deg) scale(${.7+.3*p}) translateY(${Math.sin(sc*2)*7}px)`;
-  $('s4w').style.opacity=cl(p*2);
-  const mix=eio(P(sc,2.2,.8));$('s4b').style.opacity=1-mix;
-  // glint
-  const gx=lerp(-60,160,(sc*.5)%1);const gp=(sc*.45)%1;
-  $('s4g').style.background=`linear-gradient(105deg,transparent ${gp*140-30}%,rgba(255,255,255,.85) ${gp*140-15}%,transparent ${gp*140}%)`;
-  // macro zoom
-  const z=eio(P(sc,3.9,.7))*(1-eio(P(sc,5.4,.5)));
-  $('s4w').style.transformOrigin='58% 40%';$('s4w').style.transform=`scale(${1+z*.4})`;
+  $('s4w').style.opacity=cl(p*2);$('s4w').style.transform=`translateY(${(1-p)*60}px)`;
   [0,1,2].forEach(i=>{const pp=eo(P(sc,.9+i*.12,.4));const e=$('s4p'+i);e.style.opacity=pp;e.style.transform=`translateY(${(1-pp)*20}px)`});
   const sel=P(sc,3.2,.2);
   $('s4p0').style.background=sel>=1?'linear-gradient(90deg,#7e8ea8,#3f73e8)':'#fff';$('s4p0').style.color=sel>=1?'#fff':'';
-  $('s4n').style.opacity=P(sc,1.3,.5)}
+  $('s4n').style.opacity=P(sc,1.3,.5);
+  if(window.B3&&t>=12.9&&t<19.2){const z=eio(P(sc,3.9,.7))*(1-eio(P(sc,5.4,.5)));
+   B3.s4({ry:Math.sin(sc*1.1)*.75*(1-z*.7)+z*.25,rx:.12+Math.sin(sc*.8)*.05,scale:.75+.25*p,variant:sc<2.5?'silver':'black',glint:(sc*.5)%1,zoom:z,y:Math.sin(sc*2)*.01})}}
 
  // ---- S5
  setScene('s5',win(t,19,24.1,.2));
@@ -257,7 +266,7 @@ function render(t){
   const ay=(Math.sin(sc*9)*.5+.5)*10;$('s5ar1').style.transform=$('s5ar2').style.transform=`translateY(${ay}px)`;
   const wob=push*(Math.sin(sc*14)*7);
   $('s5L').style.transform=`translateY(${(1-p)*80}px) rotate(${wob}deg) skewX(${wob*.8}deg)`;
-  $('s5R').style.transform=`translateY(${(1-p)*80}px)`;
+  $('s5R').style.transform=`translateY(${(1-p)*80}px)`;if(window.B3&&t>=18.9&&t<24.2)B3.s5({ry:-.45+Math.sin(sc*.5)*.04,rx:.1,scale:1,variant:'silver',glint:.5});
   for(let i=0;i<4;i++){const a=1+i*.65;const q=eo(P(sc,a,.4));const e=$('s5r'+i);e.style.opacity=q;e.style.transform=`translateX(${(1-q)*30}px)`}}
 
  // ---- S6
@@ -266,6 +275,7 @@ function render(t){
   ['s6a','s6b'].forEach((id,i)=>{const p=eb(P(sc,.2+i*.15,.5));$(id).style.opacity=cl(p*2);
    $(id).style.transform=`perspective(900px) translateY(${(1-p)*80}px) rotateY(${Math.sin(sc*1.4+i*2)*18}deg) scale(${.8+.2*p})`;
    $(id).style.boxShadow='0 0 40px rgba(110,90,255,.55),0 24px 40px -14px rgba(0,0,0,.6)'});
+  if(window.B3&&t>=23.9&&t<27.2)B3.s6({ry:Math.sin(sc*1.4)*.6,rx:.12,scale:1,variant:'black',glint:(sc*.6)%1});
   S6P.forEach((_,i)=>{const p=eb(P(sc,.6+i*.4,.35));const e=$('s6p'+i);e.style.opacity=cl(p*2);e.style.transform=`translateX(${(1-p)*-60}px)`})}
 
  // ---- S7

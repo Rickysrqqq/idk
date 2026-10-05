@@ -1,0 +1,13 @@
+<!doctype html><meta charset="utf-8"><body style="margin:0;background:#eef1f6">
+<canvas id="c" style="width:540px;height:540px"></canvas>
+<script type="importmap">{"imports":{"three":"./lib/three.module.js","three/addons/":"./lib/addons/"}}</script>
+<script type="module">
+import {loadOutline,buildBracket,makeScene} from './lib/bracket.js';
+const o=await loadOutline();
+const S=makeScene(document.getElementById('c'),540,540,'assets/br_black.png');
+await new Promise(r=>setTimeout(r,500));
+const m=buildBracket(o,S.tex); S.scene.add(m);
+window.ready=true;
+window.shot=(ry,rx)=>{m.rotation.y=ry;m.rotation.x=rx;S.r.render(S.scene,S.cam);};
+window.shot(.5,.1);
+</script>

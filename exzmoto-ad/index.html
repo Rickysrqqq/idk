@@ -46,8 +46,6 @@ body.dark #badge{background:#14172a;border-color:#2a3050;color:#dfe5ff}
 .hero .gl{position:absolute;inset:0;-webkit-mask-size:100% 100%;mask-size:100% 100%}
 .hero .sh{position:absolute;left:14%;right:14%;bottom:-6%;height:7%;background:radial-gradient(closest-side,rgba(10,20,40,.38),transparent);filter:blur(7px)}
 .dk .hero img{filter:drop-shadow(0 0 28px rgba(110,100,255,.45)) drop-shadow(0 18px 18px rgba(0,0,0,.6))}
-.c3d{filter:drop-shadow(0 26px 18px rgba(10,20,40,.28)) drop-shadow(0 3px 5px rgba(10,20,40,.2))}
-.dk3{filter:drop-shadow(0 0 26px rgba(110,100,255,.5)) drop-shadow(0 18px 18px rgba(0,0,0,.6))}
 .chk{font-weight:900;font-size:12px;letter-spacing:1px}
 </style></head>
 <body>
@@ -69,6 +67,9 @@ body.dark #badge{background:#14172a;border-color:#2a3050;color:#dfe5ff}
  <div class="scene" id="s1">
   <div class="card img" id="s1a" style="left:24px;top:340px;width:238px;height:340px;background-image:url(assets/m5.jpg);background-size:auto 340px;background-position:-31px 0"></div>
   <div class="card img" id="s1b" style="left:278px;top:340px;width:238px;height:340px;background-image:url(assets/m5.jpg);background-size:auto 340px;background-position:-512px 0"></div>
+  <div class="pill red" id="s1fk" style="left:24px;top:296px;font-size:17px;padding:9px 18px">✕ FAKE</div>
+  <div class="pill green" id="s1rl" style="left:278px;top:296px;font-size:17px;padding:9px 18px">✓ REAL</div>
+  <div class="abs" id="s1cap" style="left:24px;right:24px;top:760px;text-align:center;font-weight:900;font-size:15px;letter-spacing:.4px;text-transform:uppercase">Same look. <span style="color:#2f6df0">Different inside.</span></div>
   <div class="pill red" id="s1p1" style="left:24px;top:712px">FAKE?</div>
   <div class="pill green" id="s1p2" style="left:120px;top:712px">REAL?</div>
   <div class="pill red" id="s1p3" style="left:278px;top:712px">FAKE?</div>
@@ -98,9 +99,24 @@ body.dark #badge{background:#14172a;border-color:#2a3050;color:#dfe5ff}
   <div class="abs" id="s3n" style="left:24px;right:24px;top:800px;font-size:10px;color:#7b8494;text-align:center;letter-spacing:.6px">Teardown comparison · Ultra Bee rear master cylinder</div>
  </div>
 
+ <!-- SC (calipers) -->
+ <div class="scene" id="sc">
+  <div class="card" id="scF" style="left:24px;top:306px;width:226px;height:290px"><img src="assets/cal_fake.jpg" style="width:100%;height:100%;object-fit:cover;object-position:50% 38%"></div>
+  <div class="abs" id="scR" style="left:256px;top:300px;width:274px;height:300px"><img id="scRi" src="assets/cal1.png" style="position:absolute;left:0;top:18px;width:274px;filter:drop-shadow(0 26px 18px rgba(10,20,40,.35)) drop-shadow(0 3px 5px rgba(10,20,40,.25));-webkit-mask-image:linear-gradient(to right,transparent 0,#000 16%),linear-gradient(to top,transparent 0,#000 14%);-webkit-mask-composite:source-in;mask-image:linear-gradient(to right,transparent 0,#000 16%),linear-gradient(to top,transparent 0,#000 14%);mask-composite:intersect"></div>
+  <div class="pill red" id="scFl" style="left:24px;top:264px;font-size:17px;padding:9px 18px">✕ FAKE</div>
+  <div class="pill green" id="scRl" style="left:262px;top:264px;font-size:17px;padding:9px 18px">✓ REAL</div>
+  <div class="call r" id="scc1" style="left:24px;top:640px;width:236px">No cast markings</div>
+  <div class="call g" id="scc2" style="left:280px;top:640px;width:236px">Cast SurRon · HT body</div>
+  <div class="abs" id="scn" style="left:24px;right:24px;top:730px;text-align:center;font-weight:900;font-size:15px;letter-spacing:.4px;text-transform:uppercase">Genuine caliper. <span style="color:#2f6df0">Bolts right on.</span></div>
+ </div>
+
  <!-- S4 -->
  <div class="scene" id="s4">
-  <div class="abs" id="s4w" style="left:0;top:250px;width:540px;height:520px;-webkit-mask-image:linear-gradient(to bottom,transparent 0,#000 5%,#000 86%,transparent 100%);mask-image:linear-gradient(to bottom,transparent 0,#000 5%,#000 86%,transparent 100%)"><canvas id="c4" class="c3d" style="width:540px;height:520px"></canvas></div>
+  <div class="hero" id="s4w" style="left:55px;top:255px;width:430px;height:441px">
+   <div class="sh"></div>
+   <div class="rot" id="s4a"><img src="assets/exz_built.png"><div class="gl" id="s4ga" style="-webkit-mask-image:url(assets/exz_built.png);mask-image:url(assets/exz_built.png)"></div></div>
+   <div class="rot" id="s4b" style="inset:26px 20px 26px 20px"><img src="assets/br_black_cut.png"><div class="gl" id="s4gb" style="-webkit-mask-image:url(assets/br_black_cut.png);mask-image:url(assets/br_black_cut.png)"></div></div>
+  </div>
   <div class="pill light" id="s4p0" style="left:24px;top:770px;font-size:13px">Light Bee X</div>
   <div class="pill light" id="s4p1" style="left:152px;top:770px;font-size:13px">E Ride</div>
   <div class="pill light" id="s4p2" style="left:244px;top:770px;font-size:13px">Talaria</div>
@@ -113,7 +129,7 @@ body.dark #badge{background:#14172a;border-color:#2a3050;color:#dfe5ff}
   <div class="abs" style="left:276px;top:270px;width:240px;text-align:center"><div class="pill green" style="position:relative;display:inline-block">EXZMOTO</div></div>
   <div class="abs" id="s5L" style="left:38px;top:322px;width:212px;height:249px"><div style="position:absolute;left:0;top:0;width:240px;height:282px;transform:scale(.883);transform-origin:0 0;border-radius:18px;overflow:hidden;box-shadow:0 18px 30px -12px rgba(10,20,40,.35);background:url(assets/other_bracket.jpg) center/100% 100%">
   </div></div>
-  <div class="abs" id="s5R" style="left:270px;top:312px;width:256px;height:262px"><canvas id="c5" class="c3d" style="width:256px;height:262px"></canvas></div>
+  <div class="hero" id="s5R" style="left:276px;top:322px;width:240px;height:246px"><div class="sh"></div><div class="rot" id="s5rot"><img src="assets/exz_built.png"><div class="gl" id="s5g" style="-webkit-mask-image:url(assets/exz_built.png);mask-image:url(assets/exz_built.png)"></div></div></div>
   <div class="abs" id="s5ar1" style="left:132px;top:290px;font-size:34px;color:var(--red);font-weight:900">↓</div>
   <div class="abs" id="s5ar2" style="left:384px;top:290px;font-size:34px;color:var(--green);font-weight:900">↓</div>
   <div id="s5rows"></div>
@@ -121,7 +137,7 @@ body.dark #badge{background:#14172a;border-color:#2a3050;color:#dfe5ff}
 
  <!-- S6 -->
  <div class="scene" id="s6">
-  <div class="abs" id="s6h" style="left:50px;top:240px;width:440px;height:420px"><canvas id="c6" class="c3d dk3" style="width:440px;height:420px"></canvas></div>
+  <div class="hero" id="s6h" style="left:80px;top:250px;width:380px;height:390px"><div class="rot" id="s6rot"><img src="assets/exz_built.png"><div class="gl" id="s6g" style="-webkit-mask-image:url(assets/exz_built.png);mask-image:url(assets/exz_built.png)"></div></div></div>
   <div class="card img" id="s6a" style="left:352px;top:700px;width:164px;height:96px;background-image:url(assets/rg_black.jpg);background-size:cover;background-position:center"></div>
   <div class="card img" id="s6b" style="left:352px;top:806px;width:164px;height:96px;background-image:url(assets/rg_chrome.jpg);background-size:cover;background-position:center"></div>
   <div id="s6pills"></div>
@@ -141,33 +157,6 @@ body.dark #badge{background:#14172a;border-color:#2a3050;color:#dfe5ff}
  <svg id="cursor" viewBox="0 0 24 24"><path d="M4 2l15 9-6.5 1.5L9 19z" fill="#111" stroke="#fff" stroke-width="1.5" stroke-linejoin="round"/></svg>
 </div>
 
-<script type="importmap">{"imports":{"three":"./lib/three.module.js","three/addons/":"./lib/addons/"}}</script>
-<script type="module">
-import {loadOutline,loadJSON,buildBracket,buildAssembly,makeScene,DEPTH} from './lib/bracket.js';
-const [o,g,reg]=await Promise.all([loadOutline(),loadJSON('assets/guard_outline.json'),loadJSON('assets/reg.json')]);
-function mk(id,w,h,withBlack){
-  const S=makeScene(document.getElementById(id),w,h,'assets/br_silver.png',{dpr:2});
-  const T=S.THREE,tl=new T.TextureLoader();
-  const ld=u=>{const t=tl.load(u);t.colorSpace=T.SRGBColorSpace;t.anisotropy=8;return t};
-  const tg=ld('assets/exz_built_full.png');
-  const asm=buildAssembly(o,g,reg,S.tex,tg,{anod:0xaab0bb,collar:0x0d0d10});
-  S.scene.add(asm);
-  let blk=null;
-  if(withBlack){blk=buildBracket(o,ld('assets/br_black.png'),{anod:0x0b0b0e});blk.scale.setScalar(1.12);S.scene.add(blk);}
-  const gl=new T.PointLight(0xffffff,0,6,1.2);gl.position.set(-2,1,1.5);S.scene.add(gl);
-  const eng=asm.userData.bracketPoint(.736,.272);
-  return p=>{
-    const m=p.variant==='blk'?blk:asm; asm.visible=m===asm; if(blk)blk.visible=m===blk;
-    m.rotation.set(p.rx||0,p.ry||0,0);m.scale.setScalar((p.scale||1)*(m===blk?1.12:1));m.position.y=p.y||0;m.updateMatrixWorld(true);
-    const gg=p.glint??-1;gl.intensity=gg<0||gg>1?0:Math.sin(gg*Math.PI)*60;gl.position.x=-2+gg*4;
-    const z=p.zoom||0;
-    const tgt=m===blk?m.localToWorld(new T.Vector3(.05,.15,.06)):m.localToWorld(eng.clone());
-    S.cam.position.set(tgt.x*z,tgt.y*z,2.25-z*.85);S.cam.lookAt(tgt.x*z,tgt.y*z,0);
-    S.r.render(S.scene,S.cam);};
-}
-window.B3={s4:mk('c4',540,520,true),s5:mk('c5',256,262,false),s6:mk('c6',440,420,false)};
-window.B3ready=true;
-</script>
 <script>
 const $=id=>document.getElementById(id);
 const cl=(x,a=0,b=1)=>Math.min(b,Math.max(a,x));
@@ -180,15 +169,31 @@ const lerp=(a,b,x)=>a+(b-a)*x;
 const win=(t,a,b,f=.25)=>Math.min(P(t,a,f),1-P(t,b-f,f));
 
 const HEADS=[
- [0,3,'NOT ALL BRAKES','ARE REAL.'],
- [3,8,'OPEN THEM','UP.'],
- [8,13,'FEEL THE','DIFFERENCE.'],
- [13,19,'ULTRA BEE BRAKES','ON YOUR BIKE.'],
- [19,24,'BRACKET','VS. THE REST.'],
- [24,27,'BUILT TO','STOP HARD.']
+ [0,4.5,'NOT ALL BRAKES','ARE REAL.'],
+ [4.5,9,'OPEN THEM','UP.'],
+ [9,12,'FEEL THE','DIFFERENCE.'],
+ [12,16.5,'SPOT THE','REAL CALIPER.'],
+ [16.5,21,'ULTRA BEE BRAKES','ON YOUR BIKE.'],
+ [21,25,'BRACKET','VS. THE REST.'],
+ [25,27.5,'BUILT TO','STOP HARD.']
 ];
-const BADGES=[[0,3,'SPOT THE FAKE'],[3,8,'TEARDOWN'],[8,13,'SIDE BY SIDE'],[13,19,'LBX · E RIDE · TALARIA'],[19,24,'COMPARE'],[24,27,'BUILT RIGHT'],[27,31,'EXZMOTO.US']];
-const CHIPT=[3,8,13,19]; // chip i starts at CHIPT[i]-> fills through its scene; all full at 24
+const BADGES=[[0,4.5,'SPOT THE FAKE'],[4.5,9,'TEARDOWN'],[9,12,'SIDE BY SIDE'],[12,16.5,'CALIPER'],[16.5,21,'LBX · E RIDE · TALARIA'],[21,25,'COMPARE'],[25,27.5,'BUILT RIGHT'],[27.5,31,'EXZMOTO.US']];
+const CS=[4.5,12,16.5,25];
+// new-timeline -> original scene clocks (old scene code keeps its own local times)
+const SEG=[[4.5,9,3,8],[9,12,8,13],[16.5,21,13,19],[21,25,19,24],[25,27.5,24,27],[27.5,31,27,30.5]];
+function remap(T){for(const [a,b,c,d] of SEG){if(T>=a&&T<b)return c+(T-a)*(d-c)/(b-a)}return -5}
+// cursor path helper: keys [{t,x,y}], taps [t...]
+function cursorPath(T,keys,taps){const cur=$('cursor'),rip=$('ripple');
+ const t0=keys[0].t,t1=keys[keys.length-1].t+.7;
+ if(T<t0||T>t1){return false}
+ let i=0;while(i<keys.length-1&&T>keys[i+1].t)i++;
+ const k0=keys[i],k1=keys[Math.min(i+1,keys.length-1)];const f=k1.t===k0.t?1:eio(P(T,k0.t,k1.t-k0.t));
+ const x=lerp(k0.x,k1.x,f),y=lerp(k0.y,k1.y,f);
+ const near=taps.filter(q=>T>=q&&T<q+.7)[0];
+ cur.style.opacity=P(T,t0,.2)*(1-P(T,t1-.2,.2));cur.style.left=x+'px';cur.style.top=y+'px';
+ cur.style.transform=`scale(${near!==undefined?1-.15*Math.sin(P(T,near,.2)*Math.PI):1})`;
+ if(near!==undefined){const r=P(T,near,.6);rip.style.opacity=1-r;rip.style.left=(x-14)+'px';rip.style.top=(y-14)+'px';rip.style.transform=`scale(${.3+r*1.4})`}else rip.style.opacity=0;
+ return true}
 const S2={
  calls:[
   [3,4.5,'L',['rough casting','thinner seals'],['precision casting','OEM seals']],
@@ -213,39 +218,58 @@ const tilt=(el,ry,rx,sc,y)=>{el.style.transform=`translateY(${y}px) rotateY(${ry
 const glint=(el,g)=>{if(g<0||g>1){el.style.background='none';return}const x=g*150-25;el.style.background=`linear-gradient(105deg,transparent ${x}%,rgba(255,255,255,.95) ${x+7}%,rgba(255,255,255,.2) ${x+11}%,transparent ${x+16}%)`};
 function setScene(id,o){const e=$(id);e.style.opacity=o;e.style.visibility=o<=0?'hidden':'visible'}
 
-function render(t){
- const dark=P(t,24,.4)*(1-P(t,27,.4));
+function render(T){const t=remap(T);
+ const dark=P(T,25,.4)*(1-P(T,27.5,.4));
  $('dark').style.opacity=dark;
- document.body.classList.toggle('dark',t>=24.2&&t<27.2);$('s6').classList.toggle('dk',true);
+ document.body.classList.toggle('dark',T>=25.2&&T<27.7);$('s6').classList.toggle('dk',true);
  // header fades out in end card
- const hdr=1-P(t,27,.3);
+ const hdr=1-P(T,27.5,.3);
  ['logo','badge','chips','head'].forEach(i=>$(i).style.opacity=hdr);
  // grid
- $('grid').style.backgroundPosition=`0 ${(t*30)%44}px`;
- $('grid').style.opacity=.55*(1-dark)*(1-P(t,27,.3)*.5);
+ $('grid').style.backgroundPosition=`0 ${(T*30)%44}px`;
+ $('grid').style.opacity=.55*(1-dark)*(1-P(T,27.5,.3)*.5);
  // badge
- const b=BADGES.find(x=>t>=x[0]&&t<x[1])||BADGES[BADGES.length-1];$('badgeT').textContent=b[2];
+ const b=BADGES.find(x=>T>=x[0]&&T<x[1])||BADGES[BADGES.length-1];$('badgeT').textContent=b[2];
  // chips
- document.querySelectorAll('.chip b').forEach((e,i)=>{const s=CHIPT[i];const sceneEnd=[8,13,19,24][i];e.style.width=(t<s?0:(i===3?(t<24?eo(P(t,s,5))*100:100):(t<sceneEnd?eo(P(t,s,.5))*100:100)))+'%'});
+ document.querySelectorAll('.chip b').forEach((e,i)=>{e.style.width=(eo(P(T,CS[i],.6))*100)+'%'});
  // headline
- const h=HEADS.find(x=>t>=x[0]&&t<x[1]);
- if(h){const sc=t-h[0];$('head').style.display='block';
+ const h=HEADS.find(x=>T>=x[0]&&T<x[1]);
+ if(h){const sc=T-h[0];$('head').style.display='block';
   const l1=document.querySelector('#head .l1'),l2=document.querySelector('#head .l2'),l2s=document.querySelector('#head .l2 span');
   l1.textContent=h[2];l2s.textContent=h[3];
   const p1=eb(P(sc,0,.4)),p2=eb(P(sc,.15,.4));
   l1.style.transform=`scaleX(.84) translateY(${(1-p1)*-30}px)`;l1.style.opacity=cl(p1*2);
   l2.style.transform=`scaleX(.84) translateY(${(1-p2)*30}px)`;l2.style.opacity=cl(p2*2);
-  const out=1-P(t,h[1]-.2,.2);$('head').style.opacity=Math.min(out,hdr);
-  $('head').style.color=(t>=24&&t<27.2)?'#fff':'';
+  const out=1-P(T,h[1]-.2,.2);$('head').style.opacity=Math.min(out,hdr);
+  $('head').style.color=(T>=25&&T<27.7)?'#fff':'';
   $('head').style.fontSize=(Math.max(h[2].length,h[3].length)>11?54:64)+'px';
  }else $('head').style.display='none';
 
- // ---- S1
- setScene('s1',win(t,0,3.1,.2));
- {const sc=t;['s1a','s1b'].forEach((id,i)=>{const p=eb(P(sc,.35+i*.12,.5));const ry=Math.sin(sc*2.2+i*3)*16;const fy=Math.sin(sc*3+i)*6;
+ // ---- S1 (hook, new clock T): tap the fake, tap the real
+ setScene('s1',win(T,0,4.6,.2));
+ {const sc=T;['s1a','s1b'].forEach((id,i)=>{const p=eb(P(sc,.35+i*.12,.5));const ry=Math.sin(sc*2.2+i*3)*(16*(1-.7*P(sc,2.2,.4)));const fy=Math.sin(sc*3+i)*6;
   $(id).style.transform=`perspective(800px) translateY(${(1-p)*160+fy}px) rotateY(${ry}deg) scale(${.7+.3*p})`;$(id).style.opacity=cl(p*2)});
-  const fl=Math.floor(t*5)%2;
-  [['s1p1',fl],['s1p2',1-fl],['s1p3',1-fl],['s1p4',fl]].forEach(([id,v])=>{$(id).style.opacity=cl(P(t,1,.3))*(v?1:.35)})}
+  const fl=Math.floor(T*5)%2,pv=cl(P(T,1,.3));
+  const fakeR=P(T,2.2,.35),realR=P(T,3.4,.35);
+  [['s1p1',fl,1-fakeR],['s1p2',1-fl,1-fakeR],['s1p3',1-fl,1-realR],['s1p4',fl,1-realR]].forEach(([id,v,k])=>{$(id).style.opacity=pv*(v?1:.35)*k});
+  const F=$('s1fk'),R=$('s1rl');
+  F.style.opacity=cl(fakeR*2);F.style.transform=`scale(${.4+.6*eb(fakeR)})`;R.style.opacity=cl(realR*2);R.style.transform=`scale(${.4+.6*eb(realR)})`;
+  $('s1a').style.boxShadow=fakeR>0?`0 0 0 4px rgba(229,50,45,${fakeR}),0 24px 40px -14px rgba(10,20,40,.35)`:'';
+  $('s1b').style.boxShadow=realR>0?`0 0 0 4px rgba(18,183,106,${realR}),0 0 30px rgba(18,183,106,${.45*realR}),0 24px 40px -14px rgba(10,20,40,.35)`:'';
+  $('s1a').style.filter=fakeR>0?`saturate(${1-.5*fakeR}) brightness(${1-.12*fakeR})`:'';
+  $('s1cap').style.opacity=P(T,3.7,.4);}
+
+ // ---- SC (calipers, T 12-16.5): real = cutout, fake = untouched photo
+ setScene('sc',win(T,12,16.6,.25));
+ {const sc=T-12;const pF=eb(P(sc,.15,.5)),pR=eb(P(sc,.3,.5));
+  $('scF').style.opacity=cl(pF*2);$('scF').style.transform=`translateY(${(1-pF)*80}px) scale(${.85+.15*pF})`;
+  $('scR').style.opacity=cl(pR*2);$('scR').style.transform=`translateY(${(1-pR)*80+Math.sin(sc*2)*5}px) rotate(${Math.sin(sc*1.2)*2.5}deg) scale(${.85+.15*pR})`;
+  const fR=P(sc,1.25,.35),rR=P(sc,2.1,.35);
+  $('scFl').style.opacity=cl(fR*2);$('scFl').style.transform=`scale(${.4+.6*eb(fR)})`;$('scRl').style.opacity=cl(rR*2);$('scRl').style.transform=`scale(${.4+.6*eb(rR)})`;
+  $('scF').style.boxShadow=fR>0?`0 0 0 4px rgba(229,50,45,${fR}),0 24px 40px -14px rgba(10,20,40,.35)`:'';
+  $('scc1').style.opacity=P(sc,1.7,.3);$('scc1').style.transform=`translateX(${(1-eo(P(sc,1.7,.3)))*-24}px)`;
+  $('scc2').style.opacity=P(sc,2.5,.3);$('scc2').style.transform=`translateX(${(1-eo(P(sc,2.5,.3)))*24}px)`;
+  $('scn').style.opacity=P(sc,3.1,.4);}
 
  // ---- S2
  setScene('s2',win(t,3,8.1,.2));
@@ -267,14 +291,17 @@ function render(t){
  // ---- S4
  setScene('s4',win(t,13,19.1,.2));
  {const sc=t-13;const p=eb(P(sc,.2,.6));
-  $('s4w').style.opacity=cl(p*2);
+  $('s4w').style.opacity=cl(p*2);$('s4w').style.transform=`translateY(${(1-p)*60}px)`;
   [0,1,2].forEach(i=>{const pp=eo(P(sc,.9+i*.12,.4));const e=$('s4p'+i);e.style.opacity=pp;e.style.transform=`translateY(${(1-pp)*20}px)`});
   const sel=P(sc,3.2,.2);
   $('s4p0').style.background=sel>=1?'linear-gradient(90deg,#7e8ea8,#3f73e8)':'#fff';$('s4p0').style.color=sel>=1?'#fff':'';
   $('s4n').style.opacity=P(sc,1.3,.5);
-  if(window.B3&&t>=12.9&&t<19.2){const blk=sc>=2.5&&sc<5.3;const z=blk?eio(P(sc,3.1,.8))*(1-eio(P(sc,4.6,.6))):eio(P(sc,5.35,.35))*0;
-   const g=blk?P(sc,3.0,1.6):P(sc,.7,1.3);
-   B3.s4({variant:blk?'blk':'asm',ry:Math.sin(sc*1.1)*.6*(1-z*.75)+z*.2,rx:.1+Math.sin(sc*.8)*.05,scale:.8+.2*p,y:Math.sin(sc*2)*.012,glint:g>0&&g<1?g:-1,zoom:z})}}
+  {const mb=eio(P(sc,2.6,.5))*(1-eio(P(sc,5.0,.5)));const z=eio(P(sc,3.1,.8))*(1-eio(P(sc,4.9,.5)));
+   const ry=Math.sin(sc*1.1)*15*(1-z*.8),rx=6+Math.sin(sc*.8)*3,fy=Math.sin(sc*2)*5;
+   [$('s4a'),$('s4b')].forEach(e=>tilt(e,ry,rx,.8+.2*p,fy));
+   $('s4a').style.opacity=1-mb;$('s4b').style.opacity=mb;
+   const g1=P(sc,.7,1.3),g2=P(sc,5.2,.8);glint($('s4ga'),g1>0&&g1<1?g1:-1);glint($('s4gb'),P(sc,3.0,1.6)>0&&P(sc,3.0,1.6)<1?P(sc,3.0,1.6):-1);
+   const w=$('s4w');w.style.transformOrigin='57% 38%';w.style.transform=`scale(${1+z*.55})`}}
 
  // ---- S5
  setScene('s5',win(t,19,24.1,.2));
@@ -284,7 +311,7 @@ function render(t){
   const ay=(Math.sin(sc*9)*.5+.5)*10;$('s5ar1').style.transform=$('s5ar2').style.transform=`translateY(${ay}px)`;
   const wob=push*(Math.sin(sc*14)*7);
   $('s5L').style.transform=`translateY(${(1-p)*80}px) rotate(${wob}deg) skewX(${wob*.8}deg)`;
-  $('s5R').style.transform=`translateY(${(1-p)*80}px)`;if(window.B3&&t>=18.9&&t<24.2){const g=P(sc,.8,1.2);B3.s5({variant:'asm',ry:-.45+Math.sin(sc*.9)*.05,rx:.12,scale:1,glint:g>0&&g<1?g:-1})}
+  $('s5R').style.transform=`translateY(${(1-p)*80}px)`;tilt($('s5rot'),-10+Math.sin(sc*.9)*2,4,1,0);{const g=P(sc,.8,1.2);glint($('s5g'),g>0&&g<1?g:-1)}
   for(let i=0;i<5;i++){const a=.9+i*.6;const q=eo(P(sc,a,.4));const e=$('s5r'+i);e.style.opacity=q;e.style.transform=`translateX(${(1-q)*30}px)`}}
 
  // ---- S6
@@ -293,7 +320,7 @@ function render(t){
   ['s6a','s6b'].forEach((id,i)=>{const p=eb(P(sc,.2+i*.15,.5));$(id).style.opacity=cl(p*2);
    $(id).style.transform=`perspective(900px) translateY(${(1-p)*80}px) rotateY(${Math.sin(sc*1.4+i*2)*18}deg) scale(${.8+.2*p})`;
    $(id).style.boxShadow='0 0 40px rgba(110,90,255,.55),0 24px 40px -14px rgba(0,0,0,.6)'});
-  $('s6h').style.opacity=cl(eb(P(sc,.15,.6))*2);if(window.B3&&t>=23.9&&t<27.2){B3.s6({variant:'asm',ry:Math.sin(sc*1.3)*.7,rx:.1,scale:.8+.2*eb(P(sc,.15,.6)),y:Math.sin(sc*2.2)*.02,glint:(sc*.55)%1})}
+  $('s6h').style.opacity=cl(eb(P(sc,.15,.6))*2);tilt($('s6rot'),Math.sin(sc*1.3)*18,6,.8+.2*eb(P(sc,.15,.6)),Math.sin(sc*2.2)*6);{const g=(sc*.55)%1;glint($('s6g'),g)}
   S6P.forEach((_,i)=>{const p=eb(P(sc,.6+i*.4,.35));const e=$('s6p'+i);e.style.opacity=cl(p*2);e.style.transform=`translateX(${(1-p)*-60}px)`})}
 
  // ---- S7
@@ -307,13 +334,16 @@ function render(t){
   const pulse=1+.025*Math.sin(sc*6);if(sc>1.8)el.style.transform=`scale(${pulse})`;
   $('s7n').style.opacity=P(sc,1.9,.4)}
 
- // ---- cursor (S4 tap on Ultra Bee)
- {const sc=t-13;const cur=$('cursor'),rip=$('ripple');
-  if(t>=13&&t<19){const vis=P(sc,2.3,.3)*(1-P(sc,4.4,.4));
+ // ---- cursor
+ {const cur=$('cursor'),rip=$('ripple');
+  let used=false;
+  if(T<4.6) used=cursorPath(T,[{t:1.4,x:470,y:820},{t:2.1,x:143,y:520},{t:3.2,x:397,y:520}],[2.1,3.3]);
+  else if(T>=12&&T<16.6) used=cursorPath(T,[{t:13.0,x:470,y:820},{t:13.2,x:150,y:470},{t:14.0,x:400,y:470}],[13.2,14.1]);
+  else if(t>=13&&t<19){const sc=t-13;const vis=P(sc,2.3,.3)*(1-P(sc,4.4,.4));
    const x=lerp(440,60,eio(P(sc,2.4,.8))),y=lerp(860,785,eio(P(sc,2.4,.8)));
    cur.style.opacity=vis;cur.style.left=x+'px';cur.style.top=y+'px';cur.style.transform=`scale(${1-.15*Math.sin(P(sc,3.2,.2)*Math.PI)})`;
-   const r=P(sc,3.2,.6);rip.style.opacity=r>0&&r<1?1-r:0;rip.style.left=(x-14)+'px';rip.style.top=(y-14)+'px';rip.style.transform=`scale(${.3+r*1.4})`}
-  else{cur.style.opacity=0;rip.style.opacity=0}}
+   const r=P(sc,3.2,.6);rip.style.opacity=r>0&&r<1?1-r:0;rip.style.left=(x-14)+'px';rip.style.top=(y-14)+'px';rip.style.transform=`scale(${.3+r*1.4})`;used=true}
+  if(!used){cur.style.opacity=0;rip.style.opacity=0}}
 }
 window.render=render;render(0);
 </script></body></html>

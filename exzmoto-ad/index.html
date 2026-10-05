@@ -40,6 +40,12 @@ body.dark .chip{background:#1e2236;color:#8e97b3}
 body.dark #badge{background:#14172a;border-color:#2a3050;color:#dfe5ff}
 #cursor{position:absolute;width:26px;height:26px;opacity:0;z-index:50;filter:drop-shadow(0 2px 3px rgba(0,0,0,.35))}
 #ripple{position:absolute;width:44px;height:44px;border-radius:50%;border:3px solid #3f73e8;opacity:0;z-index:49}
+.hero{position:absolute;perspective:1000px}
+.hero .rot{position:absolute;inset:0;will-change:transform}
+.hero img{position:absolute;inset:0;width:100%;height:100%;filter:drop-shadow(0 26px 20px rgba(10,20,40,.30)) drop-shadow(0 3px 5px rgba(10,20,40,.22))}
+.hero .gl{position:absolute;inset:0;-webkit-mask-size:100% 100%;mask-size:100% 100%}
+.hero .sh{position:absolute;left:14%;right:14%;bottom:-6%;height:7%;background:radial-gradient(closest-side,rgba(10,20,40,.38),transparent);filter:blur(7px)}
+.dk .hero img{filter:drop-shadow(0 0 28px rgba(110,100,255,.45)) drop-shadow(0 18px 18px rgba(0,0,0,.6))}
 .chk{font-weight:900;font-size:12px;letter-spacing:1px}
 </style></head>
 <body>
@@ -92,7 +98,11 @@ body.dark #badge{background:#14172a;border-color:#2a3050;color:#dfe5ff}
 
  <!-- S4 -->
  <div class="scene" id="s4">
-  <div class="abs" id="s4w" style="left:0;top:262px;width:540px;height:520px"><canvas id="c4" style="width:540px;height:520px"></canvas></div>
+  <div class="hero" id="s4w" style="left:55px;top:255px;width:430px;height:441px">
+   <div class="sh"></div>
+   <div class="rot" id="s4a"><img src="assets/exz_built.png"><div class="gl" id="s4ga" style="-webkit-mask-image:url(assets/exz_built.png);mask-image:url(assets/exz_built.png)"></div></div>
+   <div class="rot" id="s4b" style="inset:26px 20px 26px 20px"><img src="assets/br_black_cut.png"><div class="gl" id="s4gb" style="-webkit-mask-image:url(assets/br_black_cut.png);mask-image:url(assets/br_black_cut.png)"></div></div>
+  </div>
   <div class="pill light" id="s4p0" style="left:24px;top:770px;font-size:13px">Ultra Bee</div>
   <div class="pill light" id="s4p1" style="left:140px;top:770px;font-size:13px">Light Bee X</div>
   <div class="pill light" id="s4p2" style="left:278px;top:770px;font-size:13px">Talaria</div>
@@ -103,10 +113,12 @@ body.dark #badge{background:#14172a;border-color:#2a3050;color:#dfe5ff}
  <div class="scene" id="s5">
   <div class="abs" style="left:24px;top:270px;width:240px;text-align:center"><div class="pill red" style="position:relative;display:inline-block">OTHER BRACKETS</div></div>
   <div class="abs" style="left:276px;top:270px;width:240px;text-align:center"><div class="pill green" style="position:relative;display:inline-block">EXZMOTO</div></div>
-  <div class="abs" id="s5L" style="left:24px;top:320px;width:240px;height:240px">
-   <svg viewBox="0 0 240 240" width="240" height="240"><polygon fill="#9aa1ad" stroke="#7b828f" stroke-width="2" points="30,40 52,34 70,44 96,36 124,46 150,38 172,52 180,86 168,100 188,128 200,150 186,176 170,206 140,196 118,214 92,200 70,212 48,192 56,160 38,138 46,112 28,92 36,66"/><circle cx="62" cy="62" r="12" fill="#f3f5f8" stroke="#7b828f"/><circle cx="150" cy="70" r="12" fill="#f3f5f8" stroke="#7b828f"/><circle cx="104" cy="150" r="14" fill="#f3f5f8" stroke="#7b828f"/></svg>
-  </div>
-  <div class="abs" id="s5R" style="left:276px;top:320px;width:240px;height:240px"><canvas id="c5" style="width:240px;height:240px"></canvas></div>
+  <div class="abs" id="s5L" style="left:38px;top:322px;width:212px;height:249px"><div style="position:absolute;left:0;top:0;width:240px;height:282px;transform:scale(.883);transform-origin:0 0;border-radius:18px;overflow:hidden;box-shadow:0 18px 30px -12px rgba(10,20,40,.35);background:url(assets/other_bracket.jpg) center/100% 100%">
+   <div style="position:absolute;left:84px;top:26px;width:42px;height:34px;backdrop-filter:blur(7px);-webkit-backdrop-filter:blur(7px);background:rgba(15,15,15,.55);border-radius:6px"></div>
+   <div style="position:absolute;left:78px;top:210px;width:50px;height:50px;backdrop-filter:blur(7px);-webkit-backdrop-filter:blur(7px);background:rgba(15,15,15,.55);border-radius:6px"></div>
+   <div style="position:absolute;left:70px;top:140px;width:62px;height:34px;backdrop-filter:blur(7px);-webkit-backdrop-filter:blur(7px);background:rgba(15,15,15,.4);border-radius:6px"></div>
+  </div></div>
+  <div class="hero" id="s5R" style="left:276px;top:322px;width:240px;height:246px"><div class="sh"></div><div class="rot" id="s5rot"><img src="assets/exz_built.png"><div class="gl" id="s5g" style="-webkit-mask-image:url(assets/exz_built.png);mask-image:url(assets/exz_built.png)"></div></div></div>
   <div class="abs" id="s5ar1" style="left:132px;top:290px;font-size:34px;color:var(--red);font-weight:900">↓</div>
   <div class="abs" id="s5ar2" style="left:384px;top:290px;font-size:34px;color:var(--green);font-weight:900">↓</div>
   <div id="s5rows"></div>
@@ -114,8 +126,9 @@ body.dark #badge{background:#14172a;border-color:#2a3050;color:#dfe5ff}
 
  <!-- S6 -->
  <div class="scene" id="s6">
-  <div class="card img" id="s6a" style="left:24px;top:290px;width:240px;height:300px;background:#f1f3f7"><canvas id="c6" style="width:240px;height:300px"></canvas></div>
-  <div class="card img" id="s6b" style="left:276px;top:290px;width:240px;height:300px;background-image:url(assets/rg_black.jpg);background-size:auto 300px;background-position:-95px 0"></div>
+  <div class="hero" id="s6h" style="left:80px;top:250px;width:380px;height:390px"><div class="rot" id="s6rot"><img src="assets/exz_built.png"><div class="gl" id="s6g" style="-webkit-mask-image:url(assets/exz_built.png);mask-image:url(assets/exz_built.png)"></div></div></div>
+  <div class="card img" id="s6a" style="left:352px;top:700px;width:164px;height:96px;background-image:url(assets/rg_black.jpg);background-size:cover;background-position:center"></div>
+  <div class="card img" id="s6b" style="left:352px;top:806px;width:164px;height:96px;background-image:url(assets/rg_chrome.jpg);background-size:cover;background-position:center"></div>
   <div id="s6pills"></div>
  </div>
 
@@ -133,27 +146,6 @@ body.dark #badge{background:#14172a;border-color:#2a3050;color:#dfe5ff}
  <svg id="cursor" viewBox="0 0 24 24"><path d="M4 2l15 9-6.5 1.5L9 19z" fill="#111" stroke="#fff" stroke-width="1.5" stroke-linejoin="round"/></svg>
 </div>
 
-<script type="importmap">{"imports":{"three":"./lib/three.module.js","three/addons/":"./lib/addons/"}}</script>
-<script type="module">
-import {loadOutline,buildBracket,makeScene} from './lib/bracket.js';
-const o=await loadOutline();
-function mk(id,w,h,dpr){
-  const S=makeScene(document.getElementById(id),w,h,'assets/br_black.png',{dpr});
-  const T=S.THREE, tl=new T.TextureLoader();
-  const ts=tl.load('assets/br_silver.png');ts.colorSpace=T.SRGBColorSpace;ts.anisotropy=8;
-  const mb=buildBracket(o,S.tex,{anod:0x0b0b0e}), ms=buildBracket(o,ts,{anod:0xaab0bb});
-  S.scene.add(mb,ms);
-  const gl=new T.PointLight(0xffffff,0,6,1.2);gl.position.set(-2,1,1.5);S.scene.add(gl);
-  return p=>{
-    const m=p.variant==='silver'?ms:mb;mb.visible=m===mb;ms.visible=m===ms;
-    m.rotation.set(p.rx||0,p.ry||0,0);m.scale.setScalar(p.scale||1);m.position.y=p.y||0;
-    const g=p.glint??-1;gl.intensity=g<0?0:Math.max(0,Math.sin(g*Math.PI))*60;gl.position.x=-2+g*4;
-    const z=p.zoom||0;S.cam.position.set(.05*z,.15*z,2.45-z*.6);S.cam.lookAt(.05*z,.15*z,0);
-    S.r.render(S.scene,S.cam);};
-}
-window.B3={s4:mk('c4',540,520,2),s5:mk('c5',240,240,2),s6:mk('c6',240,300,2)};
-window.B3ready=true;
-</script>
 <script>
 const $=id=>document.getElementById(id);
 const cl=(x,a=0,b=1)=>Math.min(b,Math.max(a,x));
@@ -187,19 +179,22 @@ const S2={
 (()=>{const w=$('s2calls');S2.calls.forEach((c,i)=>{c[3].forEach((tx,j)=>{const e=document.createElement('div');e.className='call r';e.id=`c${i}l${j}`;e.style.cssText=`left:24px;top:${630+j*38}px;width:230px`;e.textContent=tx;w.appendChild(e)});
  c[4].forEach((tx,j)=>{const e=document.createElement('div');e.className='call g';e.id=`c${i}r${j}`;e.style.cssText=`left:286px;top:${630+j*38}px;width:230px`;e.textContent=tx;w.appendChild(e)})})})();
 // S5 rows
-const S5R=['CNC machined','Two-tone anodized + polished','Precision bolt spacing','Machined from solid'];
-(()=>{const w=$('s5rows');S5R.forEach((tx,i)=>{const e=document.createElement('div');e.className='row';e.id='s5r'+i;e.style.top=(590+i*58)+'px';
- e.innerHTML=`<div style="display:flex;align-items:center;gap:8px"><div style="width:34px;height:34px;border-radius:50%;background:#fdeceb;color:#b3231f;font-weight:900;display:flex;align-items:center;justify-content:center">✕</div><div style="flex:1;text-align:center;font-weight:900;font-size:14px;text-transform:uppercase;letter-spacing:.3px">${tx}</div><div style="width:34px;height:34px;border-radius:50%;background:#e3f7ec;color:#0b7f48;font-weight:900;display:flex;align-items:center;justify-content:center">✓</div></div>`;w.appendChild(e)})})();
+const S5R=['ALLOY','CNC machined','Two-tone anodized + polished','Precision bolt spacing','Machined from solid'];
+(()=>{const w=$('s5rows');S5R.forEach((tx,i)=>{const e=document.createElement('div');e.className='row';e.id='s5r'+i;e.style.top=(626+i*50)+'px';
+ if(i===0){e.innerHTML=`<div style="display:flex;align-items:center;gap:8px"><div style="min-width:76px;height:34px;padding:0 12px;border-radius:17px;background:#fdeceb;color:#b3231f;font-weight:900;font-size:14px;display:flex;align-items:center;justify-content:center">6061</div><div style="flex:1;text-align:center;font-weight:900;font-size:14px;letter-spacing:.3px">ALLOY</div><div style="min-width:76px;height:34px;padding:0 12px;border-radius:17px;background:#e3f7ec;color:#0b7f48;font-weight:900;font-size:14px;display:flex;align-items:center;justify-content:center">7075-T7</div></div>`;w.appendChild(e);return}
+ e.innerHTML=`<div style="display:flex;align-items:center;gap:8px"><div style="width:34px;height:34px;border-radius:50%;background:#eceef2;color:#9aa1ad;font-weight:900;display:flex;align-items:center;justify-content:center">–</div><div style="flex:1;text-align:center;font-weight:900;font-size:14px;text-transform:uppercase;letter-spacing:.3px">${tx}</div><div style="width:34px;height:34px;border-radius:50%;background:#e3f7ec;color:#0b7f48;font-weight:900;display:flex;align-items:center;justify-content:center">✓</div></div>`;w.appendChild(e)})})();
 // S6 pills
 const S6P=['MACHINED','ANODIZED','POLISHED','INSPECTED'];
 (()=>{const w=$('s6pills');S6P.forEach((tx,i)=>{const e=document.createElement('div');e.className='pill green';e.id='s6p'+i;e.style.cssText=`left:24px;top:${640+i*44}px;font-size:13px`;e.textContent='✓ '+tx;w.appendChild(e)})})();
 
+const tilt=(el,ry,rx,sc,y)=>{el.style.transform=`translateY(${y}px) rotateY(${ry}deg) rotateX(${rx}deg) scale(${sc})`};
+const glint=(el,g)=>{if(g<0||g>1){el.style.background='none';return}const x=g*150-25;el.style.background=`linear-gradient(105deg,transparent ${x}%,rgba(255,255,255,.95) ${x+7}%,rgba(255,255,255,.2) ${x+11}%,transparent ${x+16}%)`};
 function setScene(id,o){const e=$(id);e.style.opacity=o;e.style.visibility=o<=0?'hidden':'visible'}
 
 function render(t){
  const dark=P(t,24,.4)*(1-P(t,27,.4));
  $('dark').style.opacity=dark;
- document.body.classList.toggle('dark',t>=24.2&&t<27.2);
+ document.body.classList.toggle('dark',t>=24.2&&t<27.2);$('s6').classList.toggle('dk',true);
  // header fades out in end card
  const hdr=1-P(t,27,.3);
  ['logo','badge','chips','head'].forEach(i=>$(i).style.opacity=hdr);
@@ -255,8 +250,12 @@ function render(t){
   const sel=P(sc,3.2,.2);
   $('s4p0').style.background=sel>=1?'linear-gradient(90deg,#7e8ea8,#3f73e8)':'#fff';$('s4p0').style.color=sel>=1?'#fff':'';
   $('s4n').style.opacity=P(sc,1.3,.5);
-  if(window.B3&&t>=12.9&&t<19.2){const z=eio(P(sc,3.9,.7))*(1-eio(P(sc,5.4,.5)));
-   B3.s4({ry:Math.sin(sc*1.1)*.75*(1-z*.7)+z*.25,rx:.12+Math.sin(sc*.8)*.05,scale:.75+.25*p,variant:sc<2.5?'silver':'black',glint:(sc*.5)%1,zoom:z,y:Math.sin(sc*2)*.01})}}
+  {const mb=eio(P(sc,2.6,.5))*(1-eio(P(sc,5.0,.5)));const z=eio(P(sc,3.1,.8))*(1-eio(P(sc,4.9,.5)));
+   const ry=Math.sin(sc*1.1)*15*(1-z*.8),rx=6+Math.sin(sc*.8)*3,fy=Math.sin(sc*2)*5;
+   [$('s4a'),$('s4b')].forEach(e=>tilt(e,ry,rx,.8+.2*p,fy));
+   $('s4a').style.opacity=1-mb;$('s4b').style.opacity=mb;
+   const g1=P(sc,.7,1.3),g2=P(sc,5.2,.8);glint($('s4ga'),g1>0&&g1<1?g1:-1);glint($('s4gb'),P(sc,3.0,1.6)>0&&P(sc,3.0,1.6)<1?P(sc,3.0,1.6):-1);
+   const w=$('s4w');w.style.transformOrigin='57% 38%';w.style.transform=`scale(${1+z*.55})`}}
 
  // ---- S5
  setScene('s5',win(t,19,24.1,.2));
@@ -266,8 +265,8 @@ function render(t){
   const ay=(Math.sin(sc*9)*.5+.5)*10;$('s5ar1').style.transform=$('s5ar2').style.transform=`translateY(${ay}px)`;
   const wob=push*(Math.sin(sc*14)*7);
   $('s5L').style.transform=`translateY(${(1-p)*80}px) rotate(${wob}deg) skewX(${wob*.8}deg)`;
-  $('s5R').style.transform=`translateY(${(1-p)*80}px)`;if(window.B3&&t>=18.9&&t<24.2)B3.s5({ry:-.45+Math.sin(sc*.5)*.04,rx:.1,scale:1,variant:'silver',glint:.5});
-  for(let i=0;i<4;i++){const a=1+i*.65;const q=eo(P(sc,a,.4));const e=$('s5r'+i);e.style.opacity=q;e.style.transform=`translateX(${(1-q)*30}px)`}}
+  $('s5R').style.transform=`translateY(${(1-p)*80}px)`;tilt($('s5rot'),-10+Math.sin(sc*.9)*2,4,1,0);{const g=P(sc,.8,1.2);glint($('s5g'),g>0&&g<1?g:-1)}
+  for(let i=0;i<5;i++){const a=.9+i*.6;const q=eo(P(sc,a,.4));const e=$('s5r'+i);e.style.opacity=q;e.style.transform=`translateX(${(1-q)*30}px)`}}
 
  // ---- S6
  setScene('s6',win(t,24,27.1,.25));
@@ -275,7 +274,7 @@ function render(t){
   ['s6a','s6b'].forEach((id,i)=>{const p=eb(P(sc,.2+i*.15,.5));$(id).style.opacity=cl(p*2);
    $(id).style.transform=`perspective(900px) translateY(${(1-p)*80}px) rotateY(${Math.sin(sc*1.4+i*2)*18}deg) scale(${.8+.2*p})`;
    $(id).style.boxShadow='0 0 40px rgba(110,90,255,.55),0 24px 40px -14px rgba(0,0,0,.6)'});
-  if(window.B3&&t>=23.9&&t<27.2)B3.s6({ry:Math.sin(sc*1.4)*.6,rx:.12,scale:1,variant:'black',glint:(sc*.6)%1});
+  $('s6h').style.opacity=cl(eb(P(sc,.15,.6))*2);tilt($('s6rot'),Math.sin(sc*1.3)*18,6,.8+.2*eb(P(sc,.15,.6)),Math.sin(sc*2.2)*6);{const g=(sc*.55)%1;glint($('s6g'),g)}
   S6P.forEach((_,i)=>{const p=eb(P(sc,.6+i*.4,.35));const e=$('s6p'+i);e.style.opacity=cl(p*2);e.style.transform=`translateX(${(1-p)*-60}px)`})}
 
  // ---- S7

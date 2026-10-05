@@ -1,0 +1,291 @@
+<!doctype html>
+<html><head><meta charset="utf-8">
+<style>
+:root{--ink:#0d1117;--grad:linear-gradient(90deg,#9aa6b8 0%,#4f86f7 55%,#2a5bd7 100%);--red:#e5322d;--green:#12b76a}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{width:540px;height:960px;overflow:hidden;background:#f6f7fa;font-family:"Liberation Sans",Arial,sans-serif;color:var(--ink)}
+#app{position:relative;width:540px;height:960px;overflow:hidden;background:radial-gradient(120% 70% at 50% 30%,#fff 0%,#eef1f6 100%)}
+#grid{position:absolute;left:-200px;right:-200px;bottom:-60px;height:420px;transform:perspective(260px) rotateX(62deg);transform-origin:50% 100%;
+ background-image:linear-gradient(#c9d0dc 1px,transparent 1px),linear-gradient(90deg,#c9d0dc 1px,transparent 1px);background-size:44px 44px;opacity:.55;
+ -webkit-mask-image:linear-gradient(to top,#000 0%,transparent 90%)}
+.abs{position:absolute}
+#logo{left:24px;top:24px;font-weight:900;font-style:italic;font-size:27px;letter-spacing:-.5px;transform-origin:left}
+#badge{right:24px;top:27px;display:flex;align-items:center;gap:7px;padding:6px 12px;border-radius:99px;background:#fff;border:1px solid #dfe4ec;font-size:10.5px;font-weight:800;letter-spacing:.8px;box-shadow:0 2px 8px rgba(20,30,50,.06)}
+#badge i{width:8px;height:8px;border-radius:50%;background:var(--green);box-shadow:0 0 0 3px rgba(18,183,106,.2)}
+#chips{left:24px;right:24px;top:72px;display:flex;gap:6px}
+.chip{flex:1;height:26px;border-radius:99px;background:#e6e9f0;position:relative;overflow:hidden;font-size:8.5px;font-weight:800;letter-spacing:.8px;display:flex;align-items:center;justify-content:center;color:#7b8494}
+.chip b{position:absolute;left:0;top:0;bottom:0;width:0;background:linear-gradient(90deg,#c9cfd9,#8fb0f5,#3f73e8)}
+.chip span{position:relative;z-index:2}
+#head{left:24px;top:116px;width:520px;font-weight:900;text-transform:uppercase;font-size:64px;line-height:.92;letter-spacing:-1px}
+#head div{transform-origin:left;white-space:nowrap;display:inline-block}
+#head .l1,#head .l2{display:block;white-space:nowrap;transform:scaleX(.84);transform-origin:left}
+#head .l2 span{background:var(--grad);-webkit-background-clip:text;background-clip:text;color:transparent}
+.scene{position:absolute;inset:0;opacity:0;pointer-events:none}
+.card{position:absolute;border-radius:22px;overflow:hidden;background-color:#e9edf3;box-shadow:0 24px 40px -14px rgba(10,20,40,.35),0 2px 6px rgba(10,20,40,.08)}
+.card.img{background-repeat:no-repeat}
+.pill{position:absolute;padding:7px 14px;border-radius:99px;font-weight:900;font-size:12px;letter-spacing:.8px;color:#fff;white-space:nowrap}
+.pill.red{background:var(--red)}.pill.green{background:var(--green)}
+.pill.light{background:#fff;color:var(--ink);border:1px solid #dfe4ec;box-shadow:0 2px 8px rgba(20,30,50,.06)}
+.big{position:absolute;font-weight:900;font-size:44px;font-style:italic;letter-spacing:-1px;transform:scaleX(.9)}
+.call{position:absolute;font-size:12px;font-weight:800;text-transform:uppercase;letter-spacing:.5px;padding:6px 0 6px 10px;border-left:3px solid}
+.call.r{border-color:var(--red);color:#b3231f}.call.g{border-color:var(--green);color:#0b7f48}
+.row{position:absolute;left:24px;right:24px}
+.row .lab{font-size:10px;font-weight:800;letter-spacing:1.4px;color:#7b8494;text-align:center;margin-bottom:5px}
+.row .pr{display:flex;gap:10px}
+.row .pr div{flex:1;padding:10px 12px;border-radius:12px;font-weight:800;font-size:13px}
+.row .x{background:#fdeceb;color:#b3231f}.row .v{background:#e3f7ec;color:#0b7f48}
+#dark{position:absolute;inset:0;opacity:0;background:radial-gradient(90% 60% at 50% 55%,#2b2470 0%,#0b0c1c 62%,#05060d 100%)}
+body.dark #logo{color:#fff}
+body.dark .chip{background:#1e2236;color:#8e97b3}
+body.dark #badge{background:#14172a;border-color:#2a3050;color:#dfe5ff}
+#cursor{position:absolute;width:26px;height:26px;opacity:0;z-index:50;filter:drop-shadow(0 2px 3px rgba(0,0,0,.35))}
+#ripple{position:absolute;width:44px;height:44px;border-radius:50%;border:3px solid #3f73e8;opacity:0;z-index:49}
+.chk{font-weight:900;font-size:12px;letter-spacing:1px}
+</style></head>
+<body>
+<div id="app">
+ <div id="grid"></div>
+ <div id="dark"></div>
+
+ <div id="logo" class="abs">EXZMOTO</div>
+ <div id="badge" class="abs"><i></i><span id="badgeT">SPOT THE FAKE</span></div>
+ <div id="chips" class="abs">
+  <div class="chip"><b></b><span>MASTER CYL</span></div>
+  <div class="chip"><b></b><span>CALIPER</span></div>
+  <div class="chip"><b></b><span>BRACKET</span></div>
+  <div class="chip"><b></b><span>TEST</span></div>
+ </div>
+ <div id="head" class="abs"><span class="l1"></span><span class="l2"><span></span></span></div>
+
+ <!-- S1 -->
+ <div class="scene" id="s1">
+  <div class="card img" id="s1a" style="left:24px;top:340px;width:238px;height:340px;background-image:url(assets/m5.jpg);background-size:auto 340px;background-position:-31px 0"></div>
+  <div class="card img" id="s1b" style="left:278px;top:340px;width:238px;height:340px;background-image:url(assets/m5.jpg);background-size:auto 340px;background-position:-512px 0"></div>
+  <div class="pill red" id="s1p1" style="left:24px;top:712px">FAKE?</div>
+  <div class="pill green" id="s1p2" style="left:120px;top:712px">REAL?</div>
+  <div class="pill red" id="s1p3" style="left:278px;top:712px">FAKE?</div>
+  <div class="pill green" id="s1p4" style="left:374px;top:712px">REAL?</div>
+ </div>
+
+ <!-- S2 -->
+ <div class="scene" id="s2">
+  <div class="card" id="s2c" style="left:24px;top:290px;width:492px;height:215px;background:#111">
+   <img id="s2i1" src="assets/m1.jpg" style="position:absolute;width:100%;height:100%;object-fit:cover">
+   <img id="s2i2" src="assets/m2.jpg" style="position:absolute;width:100%;height:100%;object-fit:cover">
+   <img id="s2i3" src="assets/m3.jpg" style="position:absolute;width:100%;height:100%;object-fit:cover">
+   <img id="s2i4" src="assets/m4.jpg" style="position:absolute;width:100%;height:100%;object-fit:cover">
+  </div>
+  <div class="big" id="s2f" style="left:24px;top:550px;color:var(--red)">FAKE</div>
+  <div class="big" id="s2r" style="right:24px;top:550px;color:var(--green);text-align:right;transform-origin:right">REAL</div>
+  <div id="s2calls"></div>
+ </div>
+
+ <!-- S3 -->
+ <div class="scene" id="s3">
+  <div class="card img" style="left:24px;top:262px;width:492px;height:200px;background-image:url(assets/m5.jpg);background-size:cover;background-position:center"></div>
+  <div class="row" id="s3r0" style="top:480px"><div class="lab">CASTING</div><div class="pr"><div class="x">✕ Rough finish</div><div class="v">✓ Clean finish</div></div></div>
+  <div class="row" id="s3r1" style="top:556px"><div class="lab">PISTON</div><div class="pr"><div class="x">✕ Off-profile</div><div class="v">✓ OEM profile</div></div></div>
+  <div class="row" id="s3r2" style="top:632px"><div class="lab">SEALS</div><div class="pr"><div class="x">✕ Mismatched</div><div class="v">✓ OEM spec</div></div></div>
+  <div class="row" id="s3r3" style="top:708px"><div class="lab">LEVER</div><div class="pr"><div class="x">✕ Different pivot</div><div class="v">✓ OEM design</div></div></div>
+  <div class="abs" id="s3n" style="left:24px;right:24px;top:800px;font-size:10px;color:#7b8494;text-align:center;letter-spacing:.6px">Teardown comparison · Ultra Bee rear master cylinder</div>
+ </div>
+
+ <!-- S4 -->
+ <div class="scene" id="s4">
+  <div class="abs" id="s4w" style="left:50px;top:290px;width:440px;height:440px;perspective:900px">
+   <div id="s4rot" style="position:absolute;inset:0;transform-style:preserve-3d">
+    <div id="s4a" style="position:absolute;inset:0;overflow:hidden"><img id="s4aimg" src="assets/br_black.png" style="width:440px;height:440px;filter:drop-shadow(0 30px 24px rgba(0,0,0,.25))"></div>
+    <div id="s4b" style="position:absolute;inset:0;overflow:hidden"><img src="assets/br_silver.png" style="width:440px;height:440px"></div>
+    <div id="s4g" style="position:absolute;inset:0;-webkit-mask-image:url(assets/br_black.png);-webkit-mask-size:440px 440px"></div>
+   </div>
+  </div>
+  <div class="pill light" id="s4p0" style="left:24px;top:770px;font-size:13px">Ultra Bee</div>
+  <div class="pill light" id="s4p1" style="left:140px;top:770px;font-size:13px">Light Bee X</div>
+  <div class="pill light" id="s4p2" style="left:278px;top:770px;font-size:13px">Talaria</div>
+  <div class="abs" id="s4n" style="left:24px;right:24px;top:830px;font-size:11px;color:#6b7385;letter-spacing:1px;font-weight:800;text-align:center">CNC MACHINED · TWO-TONE ANODIZED + POLISHED</div>
+ </div>
+
+ <!-- S5 -->
+ <div class="scene" id="s5">
+  <div class="abs" style="left:24px;top:270px;width:240px;text-align:center"><div class="pill red" style="position:relative;display:inline-block">OTHER BRACKETS</div></div>
+  <div class="abs" style="left:276px;top:270px;width:240px;text-align:center"><div class="pill green" style="position:relative;display:inline-block">EXZMOTO</div></div>
+  <div class="abs" id="s5L" style="left:24px;top:320px;width:240px;height:240px">
+   <svg viewBox="0 0 240 240" width="240" height="240"><polygon fill="#9aa1ad" stroke="#7b828f" stroke-width="2" points="30,40 52,34 70,44 96,36 124,46 150,38 172,52 180,86 168,100 188,128 200,150 186,176 170,206 140,196 118,214 92,200 70,212 48,192 56,160 38,138 46,112 28,92 36,66"/><circle cx="62" cy="62" r="12" fill="#f3f5f8" stroke="#7b828f"/><circle cx="150" cy="70" r="12" fill="#f3f5f8" stroke="#7b828f"/><circle cx="104" cy="150" r="14" fill="#f3f5f8" stroke="#7b828f"/></svg>
+  </div>
+  <div class="abs" id="s5R" style="left:276px;top:320px;width:240px;height:240px;overflow:hidden"><img src="assets/br_silver.png" style="width:240px;height:240px"></div>
+  <div class="abs" id="s5ar1" style="left:132px;top:290px;font-size:34px;color:var(--red);font-weight:900">↓</div>
+  <div class="abs" id="s5ar2" style="left:384px;top:290px;font-size:34px;color:var(--green);font-weight:900">↓</div>
+  <div id="s5rows"></div>
+ </div>
+
+ <!-- S6 -->
+ <div class="scene" id="s6">
+  <div class="card img" id="s6a" style="left:24px;top:290px;width:240px;height:300px;background:#f1f3f7"><img src="assets/br_black.png" style="width:240px;height:240px;margin-top:30px"></div>
+  <div class="card img" id="s6b" style="left:276px;top:290px;width:240px;height:300px;background-image:url(assets/rg_black.jpg);background-size:auto 300px;background-position:-95px 0"></div>
+  <div id="s6pills"></div>
+ </div>
+
+ <!-- S7 -->
+ <div class="scene" id="s7" style="background:radial-gradient(70% 45% at 50% 42%,rgba(79,134,247,.28),rgba(255,255,255,0) 70%)">
+  <div class="abs" id="s7logo" style="left:0;right:0;top:300px;text-align:center;font-weight:900;font-style:italic;font-size:92px;letter-spacing:-2px;transform:scaleX(.9)">EXZMOTO</div>
+  <div class="abs" id="s7sub" style="left:30px;right:30px;top:420px;text-align:center;font-weight:900;font-size:27px;line-height:1.1;text-transform:uppercase;letter-spacing:-.3px"><span style="background:var(--grad);-webkit-background-clip:text;background-clip:text;color:transparent">REAL PARTS.<br>REAL STOPPING POWER.</span></div>
+  <div class="pill light" id="s7p1" style="left:100px;top:520px;font-size:12px">Ultra Bee ready</div>
+  <div class="pill light" id="s7p2" style="left:268px;top:520px;font-size:12px">Ships from US</div>
+  <div class="abs" id="s7btn" style="left:80px;right:80px;top:600px;height:64px;border-radius:32px;background:linear-gradient(90deg,#7e8ea8,#3f73e8,#2a5bd7);color:#fff;font-weight:900;font-size:24px;display:flex;align-items:center;justify-content:center;box-shadow:0 14px 30px -8px rgba(42,91,215,.6);letter-spacing:.5px">exzmoto.us</div>
+  <div class="abs" id="s7n" style="left:0;right:0;top:688px;text-align:center;font-size:12px;color:#6b7385;font-weight:700;letter-spacing:1px">Link in bio</div>
+ </div>
+
+ <div id="ripple"></div>
+ <svg id="cursor" viewBox="0 0 24 24"><path d="M4 2l15 9-6.5 1.5L9 19z" fill="#111" stroke="#fff" stroke-width="1.5" stroke-linejoin="round"/></svg>
+</div>
+
+<script>
+const $=id=>document.getElementById(id);
+const cl=(x,a=0,b=1)=>Math.min(b,Math.max(a,x));
+const P=(t,t0,d)=>cl((t-t0)/d);
+const eo=x=>1-Math.pow(1-x,3);
+const eb=x=>{const c=1.70158,c3=c+1;return 1+c3*Math.pow(x-1,3)+c*Math.pow(x-1,2)};
+const eio=x=>x<.5?4*x*x*x:1-Math.pow(-2*x+2,3)/2;
+const lerp=(a,b,x)=>a+(b-a)*x;
+// visibility window with fades
+const win=(t,a,b,f=.25)=>Math.min(P(t,a,f),1-P(t,b-f,f));
+
+const HEADS=[
+ [0,3,'NOT ALL BRAKES','ARE REAL.'],
+ [3,8,'OPEN THEM','UP.'],
+ [8,13,'FEEL THE','DIFFERENCE.'],
+ [13,19,'MADE FOR','YOUR ULTRA BEE.'],
+ [19,24,'BRACKET','VS. THE REST.'],
+ [24,27,'BUILT TO','STOP HARD.']
+];
+const BADGES=[[0,3,'SPOT THE FAKE'],[3,8,'TEARDOWN'],[8,13,'SIDE BY SIDE'],[13,19,'CNC BRACKET'],[19,24,'COMPARE'],[24,27,'BUILT RIGHT'],[27,31,'EXZMOTO.US']];
+const CHIPT=[3,8,13,19]; // chip i starts at CHIPT[i]-> fills through its scene; all full at 24
+const S2={
+ calls:[
+  [3,4.5,'L',['rough casting','thinner seals'],['precision casting','OEM seals']],
+  [4.5,5.8,'L',['different piston profile'],['OEM piston']],
+  [5.8,7,'L',['different cap design'],['OEM cap']],
+  [7,8.2,'L',['different lever + pivot'],['OEM lever']]
+ ]
+};
+// build S2 callouts
+(()=>{const w=$('s2calls');S2.calls.forEach((c,i)=>{c[3].forEach((tx,j)=>{const e=document.createElement('div');e.className='call r';e.id=`c${i}l${j}`;e.style.cssText=`left:24px;top:${630+j*38}px;width:230px`;e.textContent=tx;w.appendChild(e)});
+ c[4].forEach((tx,j)=>{const e=document.createElement('div');e.className='call g';e.id=`c${i}r${j}`;e.style.cssText=`left:286px;top:${630+j*38}px;width:230px`;e.textContent=tx;w.appendChild(e)})})})();
+// S5 rows
+const S5R=['CNC machined','Two-tone anodized + polished','Precision bolt spacing','Machined from solid'];
+(()=>{const w=$('s5rows');S5R.forEach((tx,i)=>{const e=document.createElement('div');e.className='row';e.id='s5r'+i;e.style.top=(590+i*58)+'px';
+ e.innerHTML=`<div style="display:flex;align-items:center;gap:8px"><div style="width:34px;height:34px;border-radius:50%;background:#fdeceb;color:#b3231f;font-weight:900;display:flex;align-items:center;justify-content:center">✕</div><div style="flex:1;text-align:center;font-weight:900;font-size:14px;text-transform:uppercase;letter-spacing:.3px">${tx}</div><div style="width:34px;height:34px;border-radius:50%;background:#e3f7ec;color:#0b7f48;font-weight:900;display:flex;align-items:center;justify-content:center">✓</div></div>`;w.appendChild(e)})})();
+// S6 pills
+const S6P=['MACHINED','ANODIZED','POLISHED','INSPECTED'];
+(()=>{const w=$('s6pills');S6P.forEach((tx,i)=>{const e=document.createElement('div');e.className='pill green';e.id='s6p'+i;e.style.cssText=`left:24px;top:${640+i*44}px;font-size:13px`;e.textContent='✓ '+tx;w.appendChild(e)})})();
+
+function setScene(id,o){const e=$(id);e.style.opacity=o;e.style.visibility=o<=0?'hidden':'visible'}
+
+function render(t){
+ const dark=P(t,24,.4)*(1-P(t,27,.4));
+ $('dark').style.opacity=dark;
+ document.body.classList.toggle('dark',t>=24.2&&t<27.2);
+ // header fades out in end card
+ const hdr=1-P(t,27,.3);
+ ['logo','badge','chips','head'].forEach(i=>$(i).style.opacity=hdr);
+ // grid
+ $('grid').style.backgroundPosition=`0 ${(t*30)%44}px`;
+ $('grid').style.opacity=.55*(1-dark)*(1-P(t,27,.3)*.5);
+ // badge
+ const b=BADGES.find(x=>t>=x[0]&&t<x[1])||BADGES[BADGES.length-1];$('badgeT').textContent=b[2];
+ // chips
+ document.querySelectorAll('.chip b').forEach((e,i)=>{const s=CHIPT[i];const sceneEnd=[8,13,19,24][i];e.style.width=(t<s?0:(i===3?(t<24?eo(P(t,s,5))*100:100):(t<sceneEnd?eo(P(t,s,.5))*100:100)))+'%'});
+ // headline
+ const h=HEADS.find(x=>t>=x[0]&&t<x[1]);
+ if(h){const sc=t-h[0];$('head').style.display='block';
+  const l1=document.querySelector('#head .l1'),l2=document.querySelector('#head .l2'),l2s=document.querySelector('#head .l2 span');
+  l1.textContent=h[2];l2s.textContent=h[3];
+  const p1=eb(P(sc,0,.4)),p2=eb(P(sc,.15,.4));
+  l1.style.transform=`scaleX(.84) translateY(${(1-p1)*-30}px)`;l1.style.opacity=cl(p1*2);
+  l2.style.transform=`scaleX(.84) translateY(${(1-p2)*30}px)`;l2.style.opacity=cl(p2*2);
+  const out=1-P(t,h[1]-.2,.2);$('head').style.opacity=Math.min(out,hdr);
+  $('head').style.color=(t>=24&&t<27.2)?'#fff':'';
+  $('head').style.fontSize=(Math.max(h[2].length,h[3].length)>11?54:64)+'px';
+ }else $('head').style.display='none';
+
+ // ---- S1
+ setScene('s1',win(t,0,3.1,.2));
+ {const sc=t;['s1a','s1b'].forEach((id,i)=>{const p=eb(P(sc,.35+i*.12,.5));const ry=Math.sin(sc*2.2+i*3)*16;const fy=Math.sin(sc*3+i)*6;
+  $(id).style.transform=`perspective(800px) translateY(${(1-p)*160+fy}px) rotateY(${ry}deg) scale(${.7+.3*p})`;$(id).style.opacity=cl(p*2)});
+  const fl=Math.floor(t*5)%2;
+  [['s1p1',fl],['s1p2',1-fl],['s1p3',1-fl],['s1p4',fl]].forEach(([id,v])=>{$(id).style.opacity=cl(P(t,1,.3))*(v?1:.35)})}
+
+ // ---- S2
+ setScene('s2',win(t,3,8.1,.2));
+ {const sc=t-3;const p=eb(P(sc,0,.45));$('s2c').style.transform=`scale(${.9+.1*p})`;$('s2c').style.opacity=cl(p*2);
+  const idx=cl(Math.floor((t-3)/1.3),0,3);
+  const starts=[3,4.5,5.8,7],ends=[4.5,5.8,7,8.2];
+  for(let i=0;i<4;i++){const o=win(t,starts[i],ends[i]+(i<3?.15:0),.2);$('s2i'+(i+1)).style.opacity=i===0?(t<4.5?1:1-P(t,4.5,.2)):o;
+   $('s2i'+(i+1)).style.transform=`scale(${1+.06*P(t,starts[i],ends[i]-starts[i])})`}
+  $('s2f').style.opacity=cl(P(sc,.4,.3));$('s2r').style.opacity=cl(P(sc,.55,.3));
+  $('s2f').style.transform=`scaleX(.9) translateY(${(1-eo(P(sc,.4,.3)))*20}px)`;$('s2r').style.transform=`scaleX(.9) translateY(${(1-eo(P(sc,.55,.3)))*20}px)`;
+  S2.calls.forEach((c,i)=>{c[3].forEach((_,j)=>{const a=starts[i]+.35+j*.2;const o=win(t,a,ends[i],.15);const el=$(`c${i}l${j}`),er=$(`c${i}r${j}`);
+    el.style.opacity=o;er.style.opacity=win(t,a+.1,ends[i],.15);el.style.transform=`translateX(${(1-eo(P(t,a,.3)))*-24}px)`;er.style.transform=`translateX(${(1-eo(P(t,a+.1,.3)))*24}px)`})})}
+
+ // ---- S3
+ setScene('s3',win(t,8,13.1,.2));
+ for(let i=0;i<4;i++){const a=9.1+i*.65;const p=eo(P(t,a,.4));const e=$('s3r'+i);e.style.opacity=p;e.style.transform=`translateY(${(1-p)*30}px)`}
+ {const p=eo(P(t,8.1,.5));const c=document.querySelector('#s3 .card');c.style.transform=`scale(${.9+.1*p})`;c.style.opacity=p;$('s3n').style.opacity=P(t,11.5,.4)}
+
+ // ---- S4
+ setScene('s4',win(t,13,19.1,.2));
+ {const sc=t-13;const p=eb(P(sc,.2,.6));
+  const rot=Math.sin(sc*1.1)*38;$('s4rot').style.transform=`rotateY(${rot}deg) rotateZ(${Math.sin(sc*.8)*4}deg) scale(${.7+.3*p}) translateY(${Math.sin(sc*2)*7}px)`;
+  $('s4w').style.opacity=cl(p*2);
+  const mix=eio(P(sc,2.2,.8));$('s4b').style.opacity=1-mix;
+  // glint
+  const gx=lerp(-60,160,(sc*.5)%1);const gp=(sc*.45)%1;
+  $('s4g').style.background=`linear-gradient(105deg,transparent ${gp*140-30}%,rgba(255,255,255,.85) ${gp*140-15}%,transparent ${gp*140}%)`;
+  // macro zoom
+  const z=eio(P(sc,3.9,.7))*(1-eio(P(sc,5.4,.5)));
+  $('s4w').style.transformOrigin='58% 40%';$('s4w').style.transform=`scale(${1+z*.4})`;
+  [0,1,2].forEach(i=>{const pp=eo(P(sc,.9+i*.12,.4));const e=$('s4p'+i);e.style.opacity=pp;e.style.transform=`translateY(${(1-pp)*20}px)`});
+  const sel=P(sc,3.2,.2);
+  $('s4p0').style.background=sel>=1?'linear-gradient(90deg,#7e8ea8,#3f73e8)':'#fff';$('s4p0').style.color=sel>=1?'#fff':'';
+  $('s4n').style.opacity=P(sc,1.3,.5)}
+
+ // ---- S5
+ setScene('s5',win(t,19,24.1,.2));
+ {const sc=t-19;const p=eb(P(sc,.1,.5));$('s5L').style.opacity=$('s5R').style.opacity=cl(p*2);
+  const push=P(sc,1.2,.3)*(1-P(sc,3.6,.4));
+  $('s5ar1').style.opacity=$('s5ar2').style.opacity=push;
+  const ay=(Math.sin(sc*9)*.5+.5)*10;$('s5ar1').style.transform=$('s5ar2').style.transform=`translateY(${ay}px)`;
+  const wob=push*(Math.sin(sc*14)*7);
+  $('s5L').style.transform=`translateY(${(1-p)*80}px) rotate(${wob}deg) skewX(${wob*.8}deg)`;
+  $('s5R').style.transform=`translateY(${(1-p)*80}px)`;
+  for(let i=0;i<4;i++){const a=1+i*.65;const q=eo(P(sc,a,.4));const e=$('s5r'+i);e.style.opacity=q;e.style.transform=`translateX(${(1-q)*30}px)`}}
+
+ // ---- S6
+ setScene('s6',win(t,24,27.1,.25));
+ {const sc=t-24;
+  ['s6a','s6b'].forEach((id,i)=>{const p=eb(P(sc,.2+i*.15,.5));$(id).style.opacity=cl(p*2);
+   $(id).style.transform=`perspective(900px) translateY(${(1-p)*80}px) rotateY(${Math.sin(sc*1.4+i*2)*18}deg) scale(${.8+.2*p})`;
+   $(id).style.boxShadow='0 0 40px rgba(110,90,255,.55),0 24px 40px -14px rgba(0,0,0,.6)'});
+  S6P.forEach((_,i)=>{const p=eb(P(sc,.6+i*.4,.35));const e=$('s6p'+i);e.style.opacity=cl(p*2);e.style.transform=`translateX(${(1-p)*-60}px)`})}
+
+ // ---- S7
+ setScene('s7',P(t,27,.4));
+ {const sc=t-27;const e=(id,a,y=30)=>{const p=eb(P(sc,a,.5));const el=$(id);el.style.opacity=cl(p*2);return [el,p]};
+  let [el,p]=e('s7logo',.05);el.style.transform=`scaleX(.9) scale(${.8+.2*p})`;
+  [el,p]=e('s7sub',.5);el.style.transform=`translateY(${(1-p)*30}px)`;
+  [el,p]=e('s7p1',.9);el.style.transform=`translateY(${(1-p)*20}px)`;
+  [el,p]=e('s7p2',1.05);el.style.transform=`translateY(${(1-p)*20}px)`;
+  [el,p]=e('s7btn',1.3);el.style.transform=`scale(${.7+.3*p})`;
+  const pulse=1+.025*Math.sin(sc*6);if(sc>1.8)el.style.transform=`scale(${pulse})`;
+  $('s7n').style.opacity=P(sc,1.9,.4)}
+
+ // ---- cursor (S4 tap on Ultra Bee)
+ {const sc=t-13;const cur=$('cursor'),rip=$('ripple');
+  if(t>=13&&t<19){const vis=P(sc,2.3,.3)*(1-P(sc,4.4,.4));
+   const x=lerp(440,60,eio(P(sc,2.4,.8))),y=lerp(860,785,eio(P(sc,2.4,.8)));
+   cur.style.opacity=vis;cur.style.left=x+'px';cur.style.top=y+'px';cur.style.transform=`scale(${1-.15*Math.sin(P(sc,3.2,.2)*Math.PI)})`;
+   const r=P(sc,3.2,.6);rip.style.opacity=r>0&&r<1?1-r:0;rip.style.left=(x-14)+'px';rip.style.top=(y-14)+'px';rip.style.transform=`scale(${.3+r*1.4})`}
+  else{cur.style.opacity=0;rip.style.opacity=0}}
+}
+window.render=render;render(0);
+</script></body></html>

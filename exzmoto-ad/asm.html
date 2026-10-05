@@ -1,0 +1,14 @@
+<!doctype html><meta charset="utf-8"><body style="margin:0;background:#eef1f6"><canvas id="c" style="width:540px;height:540px"></canvas>
+<script type="importmap">{"imports":{"three":"./lib/three.module.js","three/addons/":"./lib/addons/"}}</script>
+<script type="module">
+import {loadOutline,loadJSON,buildAssembly,makeScene} from './lib/bracket.js';
+const [o,g,reg]=await Promise.all([loadOutline(),loadJSON('assets/guard_outline.json'),loadJSON('assets/reg.json')]);
+const S=makeScene(document.getElementById('c'),540,540,'assets/br_silver.png');
+const T=S.THREE,tl=new T.TextureLoader();
+const tg=tl.load('assets/exz_built_full.png');tg.colorSpace=T.SRGBColorSpace;tg.anisotropy=8;
+await new Promise(r=>setTimeout(r,700));
+S.tex.colorSpace=T.SRGBColorSpace;
+const a=buildAssembly(o,g,reg,S.tex,tg,{anod:0xaab0bb,collar:0x0d0d10});S.scene.add(a);
+S.cam.position.set(0,0,2.9);
+window.ready=true;window.shot=(ry,rx)=>{a.rotation.set(rx,ry,0);S.r.render(S.scene,S.cam)};window.shot(.5,.1);
+</script>

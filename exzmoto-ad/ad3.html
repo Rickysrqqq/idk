@@ -1,0 +1,297 @@
+<!doctype html>
+<html><head><meta charset="utf-8">
+<style>
+:root{--grad:linear-gradient(90deg,#5aa0ff 0%,#9a63ff 55%,#f066d8 100%);--g1:#5aa0ff;--g2:#9a63ff;--g3:#f066d8}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{width:540px;height:960px;overflow:hidden;background:#07060d;font-family:"Liberation Sans",Arial,sans-serif;color:#fff}
+#app{position:relative;width:540px;height:960px;overflow:hidden;background:radial-gradient(110% 60% at 50% 38%,#15102a 0%,#08070f 60%,#050409 100%)}
+.abs{position:absolute}
+#grid{position:absolute;left:-220px;right:-220px;bottom:-50px;height:430px;transform:perspective(260px) rotateX(62deg);transform-origin:50% 100%;
+ background-image:linear-gradient(rgba(140,100,255,.38) 1px,transparent 1px),linear-gradient(90deg,rgba(140,100,255,.38) 1px,transparent 1px);background-size:44px 44px;-webkit-mask-image:linear-gradient(to top,#000 0%,transparent 88%)}
+.glow{position:absolute;border-radius:50%;filter:blur(44px)}
+#logo{left:24px;top:30px;font-weight:900;font-style:italic;font-size:27px;letter-spacing:-.5px;z-index:30;text-shadow:0 0 18px rgba(154,99,255,.5)}
+#badge{right:24px;top:32px;display:flex;align-items:center;gap:7px;padding:6px 12px;border-radius:99px;background:rgba(10,8,20,.7);border:1px solid rgba(255,255,255,.16);font-size:10px;font-weight:800;letter-spacing:.9px;z-index:30;backdrop-filter:blur(6px)}
+#badge i{width:7px;height:7px;border-radius:50%;background:#2ee08a;box-shadow:0 0 8px #2ee08a}
+#hl{left:24px;top:108px;width:520px;z-index:30;font-weight:900;text-transform:uppercase;line-height:.93;letter-spacing:-1px}
+#hl span{display:block;white-space:nowrap;transform:scaleX(.84);transform-origin:left}
+#hl .a{color:#fff}
+#hl .b{background:var(--grad);-webkit-background-clip:text;background-clip:text;color:transparent}
+#sub{left:24px;top:240px;width:480px;font-size:13px;color:#c9c6dd;z-index:30}
+#newp{left:24px;top:84px;padding:4px 10px;border-radius:99px;background:linear-gradient(90deg,#9a63ff,#f066d8);font-size:9px;font-weight:900;letter-spacing:1px;z-index:30}
+.scene{position:absolute;inset:0;opacity:0;visibility:hidden}
+.corner{position:absolute;width:26px;height:26px;border:3px solid rgba(255,255,255,.85);z-index:20}
+.c1{left:20px;top:56px;border-right:0;border-bottom:0}.c2{right:20px;top:56px;border-left:0;border-bottom:0}.c3{left:20px;bottom:56px;border-right:0;border-top:0}.c4{right:20px;bottom:56px;border-left:0;border-top:0}
+.macro{position:absolute;left:0;top:0;transform-origin:50% 50%;filter:brightness(.38) contrast(1.2) saturate(.9)}
+.vig{position:absolute;inset:0;background:linear-gradient(to bottom,rgba(5,4,10,.75) 0%,rgba(5,4,10,.15) 32%,rgba(5,4,10,.1) 65%,rgba(5,4,10,.7) 100%)}
+.hero{position:absolute;perspective:1000px}
+.hero .rot{position:absolute;inset:0}
+.hero img{position:absolute;inset:0;width:100%;height:100%;filter:drop-shadow(0 0 22px rgba(120,110,255,.55)) drop-shadow(0 22px 18px rgba(0,0,0,.6))}
+.hero .gl{position:absolute;inset:0;-webkit-mask-size:100% 100%;mask-size:100% 100%}
+.cap{position:absolute;padding:7px 14px;border-radius:99px;background:rgba(10,8,20,.75);border:1px solid rgba(255,255,255,.18);font-size:12px;font-weight:800;letter-spacing:.3px;white-space:nowrap;z-index:25;display:flex;align-items:center;gap:8px;backdrop-filter:blur(6px)}
+.cap:before{content:"";width:6px;height:6px;border-radius:50%;background:#2ee08a;box-shadow:0 0 6px #2ee08a}
+.tag{position:absolute;padding:6px 12px;border-radius:99px;background:#fff;color:#0d0b16;font-size:11px;font-weight:900;white-space:nowrap;z-index:26;box-shadow:0 6px 18px rgba(0,0,0,.4)}
+.tag small{font-size:8px;font-weight:800;color:#8a8aa0;letter-spacing:.7px;margin-left:5px}
+.dot{position:absolute;width:14px;height:14px;border-radius:50%;background:#fff;border:3px solid #f066d8;z-index:27;margin:-7px 0 0 -7px;box-shadow:0 0 14px #f066d8}
+.line{position:absolute;height:2px;background:rgba(255,255,255,.85);transform-origin:0 50%;z-index:26}
+.panel{position:absolute;left:18px;top:646px;width:504px;height:236px;border-radius:22px;background:#fff;color:#0d0b16;box-shadow:0 0 0 2px rgba(154,99,255,.9),0 0 40px rgba(154,99,255,.6),0 30px 50px rgba(0,0,0,.5);z-index:25;padding:16px 16px}
+.panel .lab{display:flex;justify-content:space-between;font-size:9px;font-weight:900;letter-spacing:1.2px;color:#6b6a80;margin-bottom:7px}
+.panel .row{display:flex;gap:8px;margin-bottom:14px}
+.panel .opt{flex:1;padding:10px 6px;border-radius:12px;background:#f1f1f6;text-align:center;font-weight:900;font-size:12px;border:2px solid transparent}
+.panel .opt.on{background:#0d0b16;color:#fff}
+.panel .opt.fin{border-color:#9a63ff;background:#fff}
+.sw{width:34px;height:34px;border-radius:10px;border:2px solid transparent}
+#cursor{position:absolute;width:26px;height:26px;opacity:0;z-index:60;filter:drop-shadow(0 2px 3px rgba(0,0,0,.5))}
+#ripple{position:absolute;width:44px;height:44px;border-radius:50%;border:3px solid #9a63ff;opacity:0;z-index:59}
+#wipe{position:absolute;left:0;right:0;top:478px;height:3px;background:linear-gradient(90deg,transparent,#5aa0ff,#f066d8,transparent);box-shadow:0 0 18px #9a63ff;opacity:0;z-index:50}
+#blk{position:absolute;inset:0;background:#05040a;opacity:0;z-index:45}
+.pill{position:absolute;padding:7px 14px;border-radius:99px;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.2);font-weight:800;font-size:11px;white-space:nowrap}
+.card{position:absolute;border-radius:20px;background:linear-gradient(160deg,rgba(255,255,255,.10),rgba(255,255,255,.03));border:1px solid rgba(154,99,255,.6);box-shadow:0 0 30px rgba(154,99,255,.35),0 24px 40px rgba(0,0,0,.5);overflow:hidden}
+.step{position:absolute;top:760px;width:100px;text-align:center;font-size:9px;font-weight:900;letter-spacing:1.2px}
+.node{position:absolute;top:722px;width:28px;height:28px;border-radius:50%;border:2px solid #4a4a66;background:#0b0a14;display:flex;align-items:center;justify-content:center;font-weight:900;font-size:14px}
+
+.hero{-webkit-box-reflect:below -14px linear-gradient(to bottom,transparent 52%,rgba(255,255,255,.30) 100%)}
+.pool{position:absolute;border-radius:50%;background:radial-gradient(ellipse at center,rgba(215,200,255,.75) 0%,rgba(150,120,255,.35) 38%,transparent 70%);filter:blur(10px);z-index:0}
+.cone{position:absolute;top:0;width:520px;height:700px;left:10px;background:linear-gradient(to bottom,rgba(200,180,255,.26),rgba(150,120,255,.08) 55%,transparent);clip-path:polygon(38% 0,62% 0,100% 100%,0 100%);filter:blur(14px);mix-blend-mode:screen;z-index:0}
+.streak{position:absolute;height:3px;width:420px;background:linear-gradient(90deg,transparent,rgba(120,170,255,.9),transparent);filter:blur(2px);mix-blend-mode:screen;z-index:22;opacity:0}
+.bokeh{position:absolute;border-radius:50%;filter:blur(7px);mix-blend-mode:screen;z-index:1}
+#grain{position:absolute;inset:-40px;z-index:70;pointer-events:none;opacity:.13;mix-blend-mode:overlay;background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='300' height='300'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 .5 0 0 0 0 .5 0 0 0 0 .5 0 0 0 1.2 -.1'/></filter><rect width='300' height='300' filter='url(%23n)'/></svg>")}
+#vig2{position:absolute;inset:0;z-index:69;pointer-events:none;background:radial-gradient(120% 90% at 50% 45%,transparent 55%,rgba(0,0,0,.55) 100%)}
+.dof{position:absolute;left:0;right:0;z-index:19;pointer-events:none;backdrop-filter:blur(7px);-webkit-backdrop-filter:blur(7px)}
+#hl span{text-shadow:-1px 0 rgba(255,40,110,.28),1px 0 rgba(0,170,255,.28)}
+</style></head>
+<body><div id="app">
+ <div id="grid"></div>
+ <div class="glow" id="g1" style="left:70px;top:260px;width:400px;height:400px;background:rgba(110,90,255,.45)"></div>
+
+ <!-- S1 macro -->
+ <div class="scene" id="s1"><img class="macro" id="s1i" src="assets/macro_guard_black.jpg" style="height:960px;left:-380px"><div class="vig"></div>
+  <div class="corner c1"></div><div class="corner c2"></div><div class="corner c3"></div><div class="corner c4"></div></div>
+
+ <!-- S2 hero -->
+ <div class="scene" id="s2">
+  <div class="hero" id="s2h" style="left:60px;top:262px;width:420px;height:431px"><div class="rot" id="s2r"><img src="assets/exz_built.png"><div class="gl" id="s2g" style="-webkit-mask-image:url(assets/exz_built.png);mask-image:url(assets/exz_built.png)"></div></div></div>
+  <div class="cap" id="s2c" style="left:24px;top:800px">Billet aluminum · two-tone finish</div>
+ </div>
+
+ <!-- S3 annotations on macro -->
+ <div class="scene" id="s3"><img class="macro" id="s3i" src="assets/macro_br_black.jpg" style="width:1000px;height:1000px;left:-230px;top:110px;-webkit-mask-image:linear-gradient(to bottom,transparent 0,#000 14%);mask-image:linear-gradient(to bottom,transparent 0,#000 14%)"><div class="vig"></div><div id="s3a"></div></div>
+
+ <!-- S4 configurator -->
+ <div class="scene" id="s4">
+  <div class="hero" id="s4h" style="left:80px;top:250px;width:380px;height:380px"><div class="rot" id="s4r">
+    <img id="s4b" src="assets/br_black_cut.png" style="padding:18px"><img id="s4s" src="assets/exz_built.png" style="opacity:0;padding:0 10px"></div></div>
+  <div class="panel" id="s4p">
+   <div class="lab"><span>BIKE</span><span id="s4bike">LIGHT BEE X</span></div>
+   <div class="row"><div class="opt on" id="o0">Light Bee X</div><div class="opt" id="o1">E Ride</div><div class="opt" id="o2">Talaria</div></div>
+   <div class="lab"><span>FINISH</span><span id="s4fin">BLACK ANODIZED</span></div>
+   <div class="row"><div class="opt fin" id="f0">Black anodized</div><div class="opt" id="f1">Polished silver</div></div>
+   <div class="lab"><span>COLOR</span><span>ULTRA BEE BRAKES</span></div>
+   <div class="row" style="margin:0"><div class="sw" id="w0" style="background:#111;border-color:#9a63ff"></div><div class="sw" id="w1" style="background:linear-gradient(135deg,#f4f6fb,#9aa3b5)"></div></div>
+  </div>
+ </div>
+
+ <!-- S5 lens -->
+ <div class="scene" id="s5"><img class="macro" id="s5i" src="assets/macro_guard_chrome.jpg" style="height:960px;left:-860px"><div class="vig"></div>
+  <div class="corner c1"></div><div class="corner c2"></div><div class="corner c3"></div><div class="corner c4"></div>
+  <div id="lens" class="abs" style="width:250px;height:250px;border-radius:50%;overflow:hidden;z-index:24;box-shadow:0 0 0 4px #9a63ff,0 0 0 8px rgba(240,102,216,.6),0 0 40px rgba(154,99,255,.7)"><img id="lensi" src="assets/macro_guard_chrome.jpg" style="position:absolute;max-width:none"></div>
+  <div class="tag" id="s5t" style="left:190px;top:800px">Engraved detail · 3×</div></div>
+
+ <!-- S6 caliper -->
+ <div class="scene" id="s6">
+  <div class="hero" id="s6h" style="left:50px;top:290px;width:440px;height:402px"><div class="rot" id="s6r"><img id="s6i" src="assets/cal1.png" style="-webkit-mask-image:linear-gradient(to right,transparent 0,#000 16%),linear-gradient(to top,transparent 0,#000 14%);-webkit-mask-composite:source-in;mask-image:linear-gradient(to right,transparent 0,#000 16%),linear-gradient(to top,transparent 0,#000 14%);mask-composite:intersect"></div></div>
+  <div id="s6a"></div>
+  <div class="cap" id="s6c" style="left:24px;top:790px">Genuine SurRon HT caliper</div>
+ </div>
+
+ <!-- S7 fitment -->
+ <div class="scene" id="s7">
+  <div id="s7cards"></div>
+  <div class="cap" id="s7c" style="left:24px;top:790px">Ultra Bee brakes · CNC bracket</div>
+ </div>
+
+ <!-- S8 steps -->
+ <div class="scene" id="s8">
+  <div class="hero" id="s8h" style="left:90px;top:250px;width:360px;height:369px"><div class="rot" id="s8r"><img src="assets/exz_built.png"></div></div>
+  <div class="abs" style="left:60px;right:60px;top:735px;height:3px;background:rgba(255,255,255,.14)"></div>
+  <div class="abs" id="s8bar" style="left:60px;top:735px;height:3px;width:0;background:var(--grad);box-shadow:0 0 12px #9a63ff"></div>
+  <div class="node" id="n0" style="left:46px">✓</div><div class="node" id="n1" style="left:256px">✓</div><div class="node" id="n2" style="left:466px">✓</div>
+  <div class="step" id="t0" style="left:10px">MACHINED</div><div class="step" id="t1" style="left:220px">ANODIZED</div><div class="step" id="t2" style="left:430px">INSPECTED</div>
+ </div>
+
+ <!-- S9 end -->
+ <div class="scene" id="s9">
+  <div class="abs" id="s9l" style="left:0;right:0;top:300px;text-align:center;font-weight:900;font-style:italic;font-size:92px;letter-spacing:-2px;transform:scaleX(.9);text-shadow:0 0 40px rgba(154,99,255,.8)">EXZMOTO</div>
+  <div class="abs" id="s9s" style="left:20px;right:20px;top:420px;text-align:center;font-weight:900;font-size:21px;line-height:1.15;text-transform:uppercase"><div>Precision machined</div><div style="background:var(--grad);-webkit-background-clip:text;background-clip:text;color:transparent">brake parts for your Ultra Bee</div></div>
+  <div class="pill" id="s9p1" style="left:118px;top:500px">Fits LBX · E Ride · Talaria</div><div class="pill" id="s9p2" style="left:318px;top:500px">Ships from US</div>
+  <div class="abs" id="s9b" style="left:90px;right:90px;top:570px;height:62px;border-radius:31px;background:var(--grad);display:flex;align-items:center;justify-content:center;font-weight:900;font-size:23px;box-shadow:0 0 36px rgba(154,99,255,.8)">exzmoto.us</div>
+  <div class="abs" id="s9n" style="left:0;right:0;top:652px;text-align:center;font-size:12px;color:#b7b4cc;font-weight:700;letter-spacing:1px">Link in bio</div>
+ </div>
+
+ <div class="abs" id="newp">NEW</div>
+ <div class="abs" id="logo">EXZMOTO</div>
+ <div class="abs" id="badge"><i></i><span id="badgeT">UP CLOSE</span></div>
+ <div class="abs" id="hl"><span class="a" id="hl1"></span><span class="b" id="hl2"></span></div>
+ <div class="abs" id="sub"></div>
+ <div id="vig2"></div><div id="grain"></div><div id="blk"></div><div id="wipe"></div>
+ <div id="ripple"></div>
+ <svg id="cursor" viewBox="0 0 24 24"><path d="M4 2l15 9-6.5 1.5L9 19z" fill="#fff" stroke="#111" stroke-width="1.5" stroke-linejoin="round"/></svg>
+</div>
+<script>
+const $=id=>document.getElementById(id);
+const cl=(x,a=0,b=1)=>Math.min(b,Math.max(a,x));
+const P=(t,t0,d)=>cl((t-t0)/d);
+const eo=x=>1-Math.pow(1-x,3);
+const eb=x=>{const c=1.70158,c3=c+1;return 1+c3*Math.pow(x-1,3)+c*Math.pow(x-1,2)};
+const eio=x=>x<.5?4*x*x*x:1-Math.pow(-2*x+2,3)/2;
+const lerp=(a,b,x)=>a+(b-a)*x;
+const win=(t,a,b,f=.2)=>Math.min(P(t,a,f),1-P(t,b-f,f));
+const BOUND=[3.5,8,12.5,17.5,21.5,25.5,29,32];
+const SC=[[0,3.5,'s1'],[3.5,8,'s2'],[8,12.5,'s3'],[12.5,17.5,'s4'],[17.5,21.5,'s5'],[21.5,25.5,'s6'],[25.5,29,'s7'],[29,32,'s8'],[32,35.5,'s9']];
+const HEADS=[
+ [0,3.5,'CNC MACHINED.','EVERY CURVE.','UP CLOSE',''],
+ [3.5,8,'ULTRA BEE','BRACKET + GUARD.','NEW DROP',''],
+ [8,12.5,'BILLET ALUMINUM.','TWO-TONE FINISH.','MATERIAL',''],
+ [12.5,17.5,'PICK YOUR','BIKE.','LIVE PREVIEW','Choose your bike and finish.'],
+ [17.5,21.5,'LOOK','CLOSER.','QUALITY CHECK',''],
+ [21.5,25.5,'GENUINE CALIPER.','BOLTS RIGHT ON.','FITS YOUR BIKE',''],
+ [25.5,29,'3 BIKES.','ONE BRACKET.','FITMENT',''],
+ [29,32,'BUILT IN','3 STEPS.','MADE IN HOUSE','']
+];
+// annotation builder
+function buildAnn(root,items){const w=$(root);items.forEach((it,i)=>{
+ const d=document.createElement('div');d.className='dot';d.id=`${root}d${i}`;d.style.left=it.x+'px';d.style.top=it.y+'px';w.appendChild(d);
+ const dx=it.lx-it.x,dy=it.ly-it.y,len=Math.hypot(dx,dy),ang=Math.atan2(dy,dx)*180/Math.PI;
+ const l=document.createElement('div');l.className='line';l.id=`${root}l${i}`;l.style.cssText=`left:${it.x}px;top:${it.y}px;width:${len}px;transform:rotate(${ang}deg)`;w.appendChild(l);
+ const t=document.createElement('div');t.className='tag';t.id=`${root}t${i}`;t.innerHTML=it.text+(it.sub?`<small>${it.sub}</small>`:'');t.style.left=(it.lx-(it.right?0:0))+'px';t.style.top=(it.ly-13)+'px';if(it.left)t.style.transform='translateX(-100%)';t.dataset.tf=it.left?'translateX(-100%)':'';w.appendChild(t)})}
+function animAnn(root,items,T,t0){items.forEach((it,i)=>{const a=t0+i*.45;const p=eo(P(T,a,.35));
+ $(`${root}d${i}`).style.opacity=p;$(`${root}d${i}`).style.transform=`scale(${.4+.6*eb(P(T,a,.35))})`;
+ $(`${root}l${i}`).style.opacity=p;$(`${root}l${i}`).style.width=Math.hypot(it.lx-it.x,it.ly-it.y)*p+'px';
+ const t=$(`${root}t${i}`);t.style.opacity=P(T,a+.15,.25);t.style.transform=(t.dataset.tf||'')+` translateY(${(1-eo(P(T,a+.15,.3)))*10}px)`})}
+const A3=[{x:360,y:292,lx:300,ly:236+20,text:'Polished bushing',left:true},{x:222,y:420,lx:250,ly:470,text:'CNC toolpath',sub:'MACHINED'},{x:120,y:335,lx:70,ly:395,text:'Black anodized',sub:'FINISH'},{x:480,y:850,lx:330,ly:800,text:'Polished plate',left:true}];
+buildAnn('s3a',A3);
+const A6=[{x:272,y:340,lx:300,ly:300,text:'Banjo line'},{x:470,y:360,lx:360,ly:410,text:'Bleed nipple',left:true},{x:198,y:520,lx:90,ly:600,text:'SurRon HT',sub:'CAST'}];
+buildAnn('s6a',A6);
+// S7 cards
+const BIKES=['LIGHT BEE X','E RIDE','TALARIA'];
+(()=>{const w=$('s7cards');BIKES.forEach((b,i)=>{const c=document.createElement('div');c.className='card';c.id='cd'+i;c.style.cssText=`left:${20+i*170}px;top:300px;width:158px;height:330px`;
+ c.innerHTML=`<img src="assets/br_black_cut.png" style="position:absolute;left:-8px;top:50px;width:174px;filter:drop-shadow(0 0 16px rgba(120,110,255,.6))"><div style="position:absolute;left:0;right:0;bottom:40px;text-align:center;font-weight:900;font-size:13px;letter-spacing:.6px">${b}</div><div style="position:absolute;left:0;right:0;bottom:20px;text-align:center;font-size:9px;font-weight:800;letter-spacing:1px;color:#b7b4cc">ULTRA BEE BRAKES</div>`;w.appendChild(c)})})();
+
+function setScene(id,o){const e=$(id);e.style.opacity=o;e.style.visibility=o<=0?'hidden':'visible'}
+const tilt=(el,ry,rx,sc,y)=>{el.style.transform=`translateY(${y}px) rotateY(${ry}deg) rotateX(${rx}deg) scale(${sc})`};
+const glint=(el,g)=>{if(!el)return;if(g<0||g>1){el.style.background='none';return}const x=g*150-25;el.style.background=`linear-gradient(105deg,transparent ${x}%,rgba(255,255,255,.95) ${x+7}%,rgba(255,255,255,.2) ${x+11}%,transparent ${x+16}%)`};
+function cursorPath(T,keys,taps){const cur=$('cursor'),rip=$('ripple');
+ const t0=keys[0].t,t1=keys[keys.length-1].t+.7;if(T<t0||T>t1){return false}
+ let i=0;while(i<keys.length-1&&T>keys[i+1].t)i++;
+ const k0=keys[i],k1=keys[Math.min(i+1,keys.length-1)];const f=k1.t===k0.t?1:eio(P(T,k0.t,k1.t-k0.t));
+ const x=lerp(k0.x,k1.x,f),y=lerp(k0.y,k1.y,f);const near=taps.filter(q=>T>=q&&T<q+.7)[0];
+ cur.style.opacity=P(T,t0,.2)*(1-P(T,t1-.2,.2));cur.style.left=x+'px';cur.style.top=y+'px';
+ cur.style.transform=`scale(${near!==undefined?1-.15*Math.sin(P(T,near,.2)*Math.PI):1})`;
+ if(near!==undefined){const r=P(T,near,.6);rip.style.opacity=1-r;rip.style.left=(x-14)+'px';rip.style.top=(y-14)+'px';rip.style.transform=`scale(${.3+r*1.4})`}else rip.style.opacity=0;return true}
+
+
+// ---- realism layer setup
+function addTo(scene,cls,css){const d=document.createElement('div');d.className=cls;d.style.cssText=css;$(scene).insertBefore(d,$(scene).firstChild);return d}
+const POOLS=[['s2',210,660,380,70],['s4',270,600,360,60],['s6',270,660,380,70],['s8',270,590,340,60]];
+POOLS.forEach(([sc,cx,y,w,h])=>{addTo(sc,'pool',`left:${cx-w/2}px;top:${y}px;width:${w}px;height:${h}px`);addTo(sc,'cone','')});
+const STREAKS=['s2','s8'].map(sc=>{const d=document.createElement('div');d.className='streak';$(sc).appendChild(d);return d});
+// tilt-shift depth of field on macro scenes
+[['s1'],['s3'],['s5']].forEach(([sc])=>{
+ const a=document.createElement('div');a.className='dof';a.style.cssText='top:0;height:200px;-webkit-mask-image:linear-gradient(to bottom,#000 0%,transparent 100%);mask-image:linear-gradient(to bottom,#000,transparent)';$(sc).appendChild(a);
+ const b=document.createElement('div');b.className='dof';b.style.cssText='bottom:0;height:260px;-webkit-mask-image:linear-gradient(to top,#000 0%,transparent 100%);mask-image:linear-gradient(to top,#000,transparent)';$(sc).appendChild(b)});
+// bokeh + dust
+const BK=[];for(let i=0;i<22;i++){const d=document.createElement('div');d.className='bokeh';const r=(i*37%11)+5;const hue=[ '90,160,255','154,99,255','240,102,216'][i%3];
+ d.style.cssText=`width:${r*2}px;height:${r*2}px;background:rgba(${hue},.55)`;$('app').insertBefore(d,$('hl'));BK.push({d,x:(i*97)%540,y:(i*211)%960,sp:6+(i%5)*3,ph:i*1.7})}
+function realism(T){
+ const dark=(T>=3.5&&T<8)||(T>=12.5&&T<17.5)||(T>=21.5&&T<35.5);
+ BK.forEach(b=>{const x=(b.x+Math.sin(T*.4+b.ph)*24+T*b.sp*.4)%560-10,y=(b.y-T*b.sp+960*5)%960;b.d.style.transform=`translate(${x}px,${y}px)`;b.d.style.opacity=dark?(.10+.18*(.5+.5*Math.sin(T*1.3+b.ph))):0});
+ $('grain').style.transform=`translate(${(Math.floor(T*24)*37)%40-20}px,${(Math.floor(T*24)*53)%40-20}px)`;
+ // handheld micro-shake on macro scenes, slow dolly on the hero scenes
+ [['s1',0,3.5],['s3',8,12.5],['s5',17.5,21.5]].forEach(([id,a,b])=>{const e=$(id);if(T>=a&&T<b){e.style.transform=`translate(${Math.sin(T*7.3)*1.4}px,${Math.cos(T*6.1)*1.2}px) rotate(${Math.sin(T*3.1)*.12}deg)`}else e.style.transform=''});
+ // light streaks sweep with the glints
+ const sx=(sc,t0,y)=>{const p=(sc-t0)/1.2;return p>0&&p<1?[ -420+p*1100,y,Math.sin(p*Math.PI)]:null};
+ [[3.5+1.3,'s2',470],[29+1.4,'s8',470]].forEach(([t0,id,y],i)=>{const r=sx(T,t0,y);const el=STREAKS[i];if(r){el.style.opacity=r[2]*.9;el.style.transform=`translate(${r[0]}px,${y}px)`}else el.style.opacity=0});
+}
+
+function render(T){
+ // transitions
+ let w=0;BOUND.forEach(b=>{w=Math.max(w,1-Math.abs(T-b)/.2)});
+ $('wipe').style.opacity=w>0?1:0;$('wipe').style.transform=`scaleX(${eo(cl(w))})`;$('blk').style.opacity=.9*cl(w*1.4-.2);
+ SC.forEach(([a,b,id])=>setScene(id,win(T,a,b+(a===32?0:.1),.18)));
+ const end=T>=32;
+ ['logo','badge','hl','sub','newp'].forEach(i=>$(i).style.opacity=end?cl(1-P(T,32,.2)):1);
+ $('grid').style.backgroundPosition=`0 ${(T*34)%44}px`;
+ const darkScenes=T>=3.5&&T<8||T>=12.5&&T<17.5||T>=21.5&&T<35.5;
+ $('grid').style.opacity=darkScenes?1:.0;
+ $('g1').style.opacity=darkScenes?.85+.15*Math.sin(T*3):.0;
+ const gcol=T<8?'rgba(110,90,255,.5)':T<17.5?'rgba(240,102,216,.35)':T<25.5?'rgba(90,160,255,.4)':T<29?'rgba(154,99,255,.5)':'rgba(240,102,216,.4)';
+ $('g1').style.background=gcol;
+ // headline
+ const h=HEADS.find(x=>T>=x[0]&&T<x[1]);
+ if(h){const sc=T-h[0];$('hl').style.display='block';$('hl1').textContent=h[2];$('hl2').textContent=h[3];
+  const L=Math.max(h[2].length,h[3].length);$('hl').style.fontSize=(L>14?44:L>11?52:60)+'px';
+  const p1=eb(P(sc,0,.4)),p2=eb(P(sc,.15,.4));
+  $('hl1').style.transform=`scaleX(.84) translateY(${(1-p1)*-26}px)`;$('hl1').style.opacity=cl(p1*2);
+  $('hl2').style.transform=`scaleX(.84) translateY(${(1-p2)*26}px)`;$('hl2').style.opacity=cl(p2*2);
+  $('hl').style.opacity=Math.min(1-P(T,h[1]-.15,.15),end?0:1);
+  $('badgeT').textContent=h[4];
+  $('sub').textContent=h[5];$('sub').style.opacity=P(sc,.5,.4);
+  $('newp').style.display=(T>=3.5&&T<8)?'block':'none';
+  $('hl').style.top=(T>=3.5&&T<8)?'124px':'108px';
+ }else{$('hl').style.display='none';$('badgeT').textContent='EXZMOTO.US';$('sub').textContent='';$('newp').style.display='none'}
+
+ // S1
+ {const sc=T;const k=1.05+.18*P(sc,0,3.5);$('s1i').style.transform=`scale(${k}) translate(${-sc*6}px,0)`;}
+ // S2
+ {const sc=T-3.5;const p=eb(P(sc,.2,.6));$('s2h').style.opacity=cl(p*2);
+  tilt($('s2r'),Math.sin(sc*1.2)*16,6+Math.sin(sc*.9)*3,.8+.2*p,Math.sin(sc*2)*6);
+  const g=(sc*.45)%1;glint($('s2g'),sc>.9?g:-1);
+  $('s2c').textContent=sc<2.3?'Billet aluminum · two-tone finish':'Mounts Ultra Bee brakes';
+  $('s2c').style.opacity=P(sc,.7,.3)*(1-P(sc,2.2,.1)*(1-P(sc,2.3,.1)));}
+ // S3
+ {const sc=T-8;$('s3i').style.transform=`scale(${1.0+.08*P(sc,0,4.5)})`;animAnn('s3a',A3,T,8.9);}
+ // S4
+ {const sc=T-12.5;const p=eb(P(sc,.2,.6));$('s4h').style.opacity=cl(p*2);
+  const silver=T>=15.6;const fl=Math.max(0,1-Math.abs(T-15.6)/.25);
+  $('s4b').style.opacity=silver?0:1;$('s4s').style.opacity=silver?1:0;
+  tilt($('s4r'),Math.sin(sc*1.3)*18,6,(.82+.18*p)*(1+.05*fl),Math.sin(sc*2)*5);
+  $('s4p').style.transform=`translateY(${(1-eo(P(sc,.4,.5)))*320}px)`;$('s4p').style.opacity=cl(P(sc,.4,.3));
+  const bike=T>=14.8?2:T>=13.9?1:0;
+  [0,1,2].forEach(i=>{$('o'+i).className='opt'+(i===bike?' on':'')});$('s4bike').textContent=BIKES[bike];
+  $('f0').className='opt'+(silver?'':' fin');$('f1').className='opt'+(silver?' fin':'');
+  $('s4fin').textContent=silver?'POLISHED SILVER':'BLACK ANODIZED';
+  $('w0').style.borderColor=silver?'transparent':'#9a63ff';$('w1').style.borderColor=silver?'#9a63ff':'transparent';}
+ // S5
+ {const sc=T-17.5;$('s5i').style.transform=`scale(${1.0+.04*P(sc,0,4)})`;
+  const ex=328,ey=614;const cx=lerp(ex-90,ex+40,eio(P(sc,.2,3.4))),cy=lerp(ey-70,ey+10,eio(P(sc,.2,3.4)));
+  const lens=$('lens');lens.style.left=(cx-125)+'px';lens.style.top=(cy-125)+'px';lens.style.opacity=cl(P(sc,.3,.3));lens.style.transform=`scale(${.6+.4*eb(P(sc,.3,.5))})`;
+  const Z=2.6,H=960,Wd=H*1576/998,L=-860;const img=$('lensi');img.style.height=(H*Z)+'px';
+  img.style.left=(125-(cx-L)*Z)+'px';img.style.top=(125-cy*Z)+'px';
+  $('s5t').style.opacity=P(sc,1.2,.3);}
+ // S6
+ {const sc=T-21.5;const p=eb(P(sc,.15,.6));$('s6h').style.opacity=cl(p*2);
+  tilt($('s6r'),Math.sin(sc*1.1)*10,4,.85+.15*p,Math.sin(sc*2)*6);animAnn('s6a',A6,T,23.1);
+  $('s6c').style.opacity=P(sc,.7,.3);}
+ // S7
+ {const sc=T-25.5;[0,1,2].forEach(i=>{const p=eb(P(sc,.15+i*.18,.55));const c=$('cd'+i);c.style.opacity=cl(p*2);
+   c.style.transform=`perspective(900px) translateY(${(1-p)*120}px) rotateY(${(1-p)*40+Math.sin(sc*1.4+i)*6}deg) rotateZ(${(i-1)*-3}deg)`});
+  $('s7c').style.opacity=P(sc,1.2,.3);}
+ // S8
+ {const sc=T-29;const p=eb(P(sc,.1,.5));$('s8h').style.opacity=cl(p*2);tilt($('s8r'),Math.sin(sc*1.3)*16,5,.85+.15*p,Math.sin(sc*2)*5);
+  $('s8bar').style.width=(420*eio(P(sc,.7,1.9)))+'px';
+  [0,1,2].forEach(i=>{const a=.7+i*.95;const on=P(sc,a,.25);const n=$('n'+i);n.style.borderColor=on>0?'#9a63ff':'#4a4a66';n.style.background=on>0?'linear-gradient(135deg,#5aa0ff,#9a63ff)':'#0b0a14';n.style.color=on>0?'#fff':'transparent';n.style.transform=`scale(${1+.25*Math.sin(on*Math.PI)})`;n.style.boxShadow=on>0?'0 0 16px #9a63ff':'none';
+   $('t'+i).style.color=on>0?'#fff':'#6b6a80'})}
+ // S9
+ {const sc=T-32;const e=(id,a)=>{const p=eb(P(sc,a,.5));const el=$(id);el.style.opacity=cl(p*2);return p};
+  let p=e('s9l',.05);$('s9l').style.transform=`scaleX(.9) scale(${.8+.2*p})`;
+  p=e('s9s',.5);$('s9s').style.transform=`translateY(${(1-p)*24}px)`;
+  p=e('s9p1',.9);$('s9p1').style.transform=`translateY(${(1-p)*18}px)`;p=e('s9p2',1.05);$('s9p2').style.transform=`translateY(${(1-p)*18}px)`;
+  p=e('s9b',1.3);$('s9b').style.transform=`scale(${(.7+.3*p)*(sc>1.9?1+.025*Math.sin(sc*6):1)})`;
+  $('s9n').style.opacity=P(sc,1.9,.4);}
+ realism(T);
+ // cursor
+ let used=false;
+ if(T>=13.1&&T<16.4)used=cursorPath(T,[{t:13.2,x:470,y:900},{t:13.9,x:285,y:731},{t:14.8,x:430,y:731},{t:15.6,x:360,y:795}],[13.9,14.8,15.6]);
+ if(!used){$('cursor').style.opacity=0;$('ripple').style.opacity=0}
+}
+window.render=render;render(0);
+</script></body></html>

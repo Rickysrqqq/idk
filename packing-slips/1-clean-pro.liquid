@@ -1,0 +1,119 @@
+<!-- EXZMOTO packing slip — Layout 1: Clean Pro (Letter / A4, printer friendly) -->
+<style>
+  @page { margin: 12mm; }
+  .ps { font-family: "Helvetica Neue", Arial, sans-serif; color: #111; font-size: 12px; line-height: 1.45; max-width: 760px; margin: 0 auto; }
+  .ps-top { display: flex; justify-content: space-between; align-items: flex-start; border-bottom: 3px solid #111; padding-bottom: 14px; }
+  .ps-logo { font-size: 30px; font-weight: 900; font-style: italic; letter-spacing: -1px; }
+  .ps-logo img { max-height: 46px; }
+  .ps-tag { font-size: 10px; letter-spacing: 2px; text-transform: uppercase; color: #666; margin-top: 2px; }
+  .ps-order { text-align: right; }
+  .ps-order .num { font-size: 22px; font-weight: 800; }
+  .ps-order .meta { color: #555; font-size: 11px; }
+  .ps-addr { display: flex; gap: 16px; margin: 18px 0; }
+  .ps-box { flex: 1; border: 1px solid #ddd; border-radius: 8px; padding: 12px 14px; }
+  .ps-box h4 { margin: 0 0 6px; font-size: 10px; letter-spacing: 1.5px; text-transform: uppercase; color: #777; }
+  .ps-box p { margin: 0; }
+  table.ps-items { width: 100%; border-collapse: collapse; margin-top: 6px; }
+  .ps-items th { text-align: left; font-size: 10px; letter-spacing: 1.2px; text-transform: uppercase; color: #777; border-bottom: 1px solid #111; padding: 8px 6px; }
+  .ps-items td { border-bottom: 1px solid #e6e6e6; padding: 10px 6px; vertical-align: middle; }
+  .ps-items img { width: 54px; height: 54px; object-fit: cover; border-radius: 6px; border: 1px solid #eee; }
+  .ps-items .title { font-weight: 700; }
+  .ps-items .sub { color: #666; font-size: 11px; }
+  .ps-items .qty { text-align: center; font-weight: 800; font-size: 14px; }
+  .ps-items .chk { width: 18px; height: 18px; border: 2px solid #111; border-radius: 3px; display: inline-block; }
+  .ps-note { margin-top: 14px; padding: 10px 14px; background: #f5f5f7; border-radius: 8px; }
+  .ps-note h4 { margin: 0 0 4px; font-size: 10px; letter-spacing: 1.5px; text-transform: uppercase; color: #777; }
+  .ps-tips { margin-top: 18px; border: 1px dashed #bbb; border-radius: 8px; padding: 12px 14px; }
+  .ps-tips h4 { margin: 0 0 6px; font-size: 11px; letter-spacing: 1px; text-transform: uppercase; }
+  .ps-tips ul { margin: 0; padding-left: 18px; }
+  .ps-foot { display: flex; justify-content: space-between; align-items: center; margin-top: 22px; padding-top: 14px; border-top: 1px solid #ddd; }
+  .ps-thanks { font-size: 16px; font-weight: 800; }
+  .ps-foot .small { color: #666; font-size: 11px; }
+  .ps-qr img { width: 74px; height: 74px; }
+</style>
+
+<div class="ps">
+  <div class="ps-top">
+    <div>
+      <div class="ps-logo">{{ shop.name | upcase }}</div>
+      <div class="ps-tag">Precision machined brake parts</div>
+    </div>
+    <div class="ps-order">
+      <div class="num">Order {{ order.name }}</div>
+      <div class="meta">{{ order.created_at | date: "%B %e, %Y" }}</div>
+      {% if order.po_number != blank %}<div class="meta">PO #{{ order.po_number }}</div>{% endif %}
+    </div>
+  </div>
+
+  <div class="ps-addr">
+    <div class="ps-box">
+      <h4>{% if delivery_method.instructions != blank %}Deliver to{% else %}Ship to{% endif %}</h4>
+      {% if shipping_address != blank %}
+        <p><strong>{{ shipping_address.name }}</strong></p>
+        {% if shipping_address.company != blank %}<p>{{ shipping_address.company }}</p>{% endif %}
+        <p>{{ shipping_address.address1 }}</p>
+        {% if shipping_address.address2 != blank %}<p>{{ shipping_address.address2 }}</p>{% endif %}
+        <p>{{ shipping_address.city_province_zip }}</p>
+        <p>{{ shipping_address.country }}</p>
+        {% if shipping_address.phone != blank %}<p>{{ shipping_address.phone }}</p>{% endif %}
+      {% else %}<p>No shipping address</p>{% endif %}
+    </div>
+    <div class="ps-box">
+      <h4>Bill to</h4>
+      {% if billing_address != blank %}
+        <p><strong>{{ billing_address.name }}</strong></p>
+        {% if billing_address.company != blank %}<p>{{ billing_address.company }}</p>{% endif %}
+        <p>{{ billing_address.address1 }}</p>
+        {% if billing_address.address2 != blank %}<p>{{ billing_address.address2 }}</p>{% endif %}
+        <p>{{ billing_address.city_province_zip }}</p>
+        <p>{{ billing_address.country }}</p>
+      {% else %}<p>No billing address</p>{% endif %}
+    </div>
+  </div>
+
+  <table class="ps-items">
+    <thead><tr><th></th><th>Item</th><th>SKU</th><th style="text-align:center">Qty</th><th style="text-align:center">Packed</th></tr></thead>
+    <tbody>
+      {% for line_item in line_items_in_shipment %}
+      <tr>
+        <td style="width:62px">{% if line_item.image != blank %}<img src="{{ line_item.image | img_url: '120x120' }}" alt="">{% endif %}</td>
+        <td>
+          <div class="title">{{ line_item.title }}</div>
+          {% if line_item.variant_title != blank %}<div class="sub">{{ line_item.variant_title }}</div>{% endif %}
+        </td>
+        <td class="sub">{{ line_item.sku }}</td>
+        <td class="qty">{{ line_item.shipping_quantity }} <span class="sub">of {{ line_item.quantity }}</span></td>
+        <td style="text-align:center"><span class="chk"></span></td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+
+  {% unless includes_all_line_items_in_order %}
+    <div class="ps-note"><h4>Partial shipment</h4>Other items from your order are shipping separately.</div>
+  {% endunless %}
+  {% if order.note != blank %}
+    <div class="ps-note"><h4>Order note</h4>{{ order.note }}</div>
+  {% endif %}
+  {% if delivery_method.instructions != blank %}
+    <div class="ps-note"><h4>Delivery instructions</h4>{{ delivery_method.instructions }}</div>
+  {% endif %}
+
+  <div class="ps-tips">
+    <h4>Before you ride</h4>
+    <ul>
+      <li>Torque all fasteners to the spec in your bike's service manual and use thread locker where specified.</li>
+      <li>Bleed the brakes if any line was opened, and bed in new pads before hard riding.</li>
+      <li>Check pad-to-rotor alignment and test the brakes at low speed first.</li>
+    </ul>
+  </div>
+
+  <div class="ps-foot">
+    <div>
+      <div class="ps-thanks">Thanks for riding with {{ shop.name }}.</div>
+      <div class="small">Questions? {{ shop.email }} · {{ shop.domain }}</div>
+      <div class="small">{{ shop_address.address1 }}, {{ shop_address.city }}, {{ shop_address.province_code }} {{ shop_address.zip }}</div>
+    </div>
+    <div class="ps-qr"><img src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=https://{{ shop.domain }}" alt=""></div>
+  </div>
+</div>

@@ -1,0 +1,107 @@
+<!-- EXZMOTO packing slip — Layout 2: Bold Brand (Letter / A4, dark header to match the ads) -->
+<style>
+  @page { margin: 10mm; }
+  .bb { font-family: "Helvetica Neue", Arial, sans-serif; color: #111; font-size: 12px; line-height: 1.45; max-width: 760px; margin: 0 auto; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+  .bb-head { background: #0b0a14; color: #fff; border-radius: 14px; padding: 20px 22px; position: relative; overflow: hidden; }
+  .bb-head:after { content: ""; position: absolute; left: 0; right: 0; bottom: 0; height: 5px; background: linear-gradient(90deg,#5aa0ff,#9a63ff,#f066d8); }
+  .bb-row { display: flex; justify-content: space-between; align-items: center; }
+  .bb-logo { font-size: 32px; font-weight: 900; font-style: italic; letter-spacing: -1px; }
+  .bb-pill { font-size: 10px; letter-spacing: 1.5px; text-transform: uppercase; border: 1px solid rgba(255,255,255,.35); border-radius: 99px; padding: 5px 12px; }
+  .bb-big { margin-top: 14px; font-size: 13px; color: #c9c6dd; }
+  .bb-big strong { display: block; font-size: 30px; color: #fff; letter-spacing: -.5px; }
+  .bb-grid { display: flex; gap: 14px; margin: 16px 0; }
+  .bb-card { flex: 1; border: 1px solid #e3e1ee; border-radius: 12px; padding: 12px 14px; }
+  .bb-card h4 { margin: 0 0 6px; font-size: 10px; letter-spacing: 1.5px; text-transform: uppercase; color: #7a6fd0; }
+  .bb-card p { margin: 0; }
+  .bb-sec { font-size: 10px; letter-spacing: 1.5px; text-transform: uppercase; color: #7a6fd0; margin: 18px 0 8px; font-weight: 800; }
+  .bb-item { display: flex; align-items: center; gap: 14px; border: 1px solid #e3e1ee; border-radius: 12px; padding: 10px 12px; margin-bottom: 8px; }
+  .bb-item img { width: 64px; height: 64px; object-fit: cover; border-radius: 8px; background: #f3f2f8; }
+  .bb-item .info { flex: 1; }
+  .bb-item .t { font-weight: 800; font-size: 13px; }
+  .bb-item .s { color: #666; font-size: 11px; }
+  .bb-qty { text-align: center; min-width: 64px; }
+  .bb-qty b { display: block; font-size: 20px; }
+  .bb-qty span { font-size: 10px; color: #777; }
+  .bb-chk { width: 22px; height: 22px; border: 2px solid #111; border-radius: 5px; }
+  .bb-note { background: #f4f2fb; border-radius: 12px; padding: 10px 14px; margin-top: 8px; }
+  .bb-note h4 { margin: 0 0 4px; font-size: 10px; letter-spacing: 1.5px; text-transform: uppercase; color: #7a6fd0; }
+  .bb-steps { display: flex; gap: 10px; margin-top: 6px; }
+  .bb-step { flex: 1; border: 1px solid #e3e1ee; border-radius: 12px; padding: 10px 12px; }
+  .bb-step b { display: inline-block; width: 22px; height: 22px; border-radius: 50%; background: #0b0a14; color: #fff; text-align: center; line-height: 22px; font-size: 11px; margin-bottom: 6px; }
+  .bb-foot { margin-top: 18px; background: #0b0a14; color: #fff; border-radius: 14px; padding: 16px 20px; display: flex; justify-content: space-between; align-items: center; }
+  .bb-foot .big { font-size: 18px; font-weight: 900; font-style: italic; }
+  .bb-foot .small { color: #c9c6dd; font-size: 11px; }
+  .bb-foot img { width: 70px; height: 70px; background: #fff; border-radius: 8px; padding: 4px; }
+</style>
+
+<div class="bb">
+  <div class="bb-head">
+    <div class="bb-row">
+      <div class="bb-logo">{{ shop.name | upcase }}</div>
+      <div class="bb-pill">Packing slip</div>
+    </div>
+    <div class="bb-row">
+      <div class="bb-big">Order<strong>{{ order.name }}</strong></div>
+      <div class="bb-big" style="text-align:right">{{ order.created_at | date: "%b %d, %Y" }}{% if order.po_number != blank %}<br>PO #{{ order.po_number }}{% endif %}</div>
+    </div>
+  </div>
+
+  <div class="bb-grid">
+    <div class="bb-card">
+      <h4>{% if delivery_method.instructions != blank %}Deliver to{% else %}Ship to{% endif %}</h4>
+      {% if shipping_address != blank %}
+        <p><strong>{{ shipping_address.name }}</strong></p>
+        {% if shipping_address.company != blank %}<p>{{ shipping_address.company }}</p>{% endif %}
+        <p>{{ shipping_address.address1 }}</p>
+        {% if shipping_address.address2 != blank %}<p>{{ shipping_address.address2 }}</p>{% endif %}
+        <p>{{ shipping_address.city_province_zip }}</p>
+        <p>{{ shipping_address.country }}</p>
+      {% else %}<p>No shipping address</p>{% endif %}
+    </div>
+    <div class="bb-card">
+      <h4>Bill to</h4>
+      {% if billing_address != blank %}
+        <p><strong>{{ billing_address.name }}</strong></p>
+        <p>{{ billing_address.address1 }}</p>
+        {% if billing_address.address2 != blank %}<p>{{ billing_address.address2 }}</p>{% endif %}
+        <p>{{ billing_address.city_province_zip }}</p>
+        <p>{{ billing_address.country }}</p>
+      {% else %}<p>No billing address</p>{% endif %}
+    </div>
+  </div>
+
+  <div class="bb-sec">In this box</div>
+  {% for line_item in line_items_in_shipment %}
+  <div class="bb-item">
+    {% if line_item.image != blank %}<img src="{{ line_item.image | img_url: '160x160' }}" alt="">{% endif %}
+    <div class="info">
+      <div class="t">{{ line_item.title }}</div>
+      {% if line_item.variant_title != blank %}<div class="s">{{ line_item.variant_title }}</div>{% endif %}
+      {% if line_item.sku != blank %}<div class="s">SKU {{ line_item.sku }}</div>{% endif %}
+    </div>
+    <div class="bb-qty"><b>{{ line_item.shipping_quantity }}</b><span>of {{ line_item.quantity }}</span></div>
+    <div class="bb-chk"></div>
+  </div>
+  {% endfor %}
+
+  {% unless includes_all_line_items_in_order %}
+    <div class="bb-note"><h4>Partial shipment</h4>Other items from your order are shipping separately.</div>
+  {% endunless %}
+  {% if order.note != blank %}<div class="bb-note"><h4>Order note</h4>{{ order.note }}</div>{% endif %}
+  {% if delivery_method.instructions != blank %}<div class="bb-note"><h4>Delivery instructions</h4>{{ delivery_method.instructions }}</div>{% endif %}
+
+  <div class="bb-sec">Before you ride</div>
+  <div class="bb-steps">
+    <div class="bb-step"><b>1</b><div>Torque every fastener to your bike's service-manual spec.</div></div>
+    <div class="bb-step"><b>2</b><div>Bleed the brakes if any line was opened. Bed in new pads.</div></div>
+    <div class="bb-step"><b>3</b><div>Check rotor alignment and test at low speed first.</div></div>
+  </div>
+
+  <div class="bb-foot">
+    <div>
+      <div class="big">Thanks for riding {{ shop.name }}.</div>
+      <div class="small">Tag us in your build · {{ shop.domain }} · {{ shop.email }}</div>
+    </div>
+    <img src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=https://{{ shop.domain }}" alt="">
+  </div>
+</div>

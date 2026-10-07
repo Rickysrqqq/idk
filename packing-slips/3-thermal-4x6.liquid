@@ -1,0 +1,54 @@
+<!-- EXZMOTO packing slip — Layout 3: 4x6 thermal (label printers like Rollo / Zebra / Munbyn). Black and white only. -->
+<style>
+  @page { size: 4in 6in; margin: 0.15in; }
+  .th { font-family: Arial, sans-serif; color: #000; font-size: 10px; line-height: 1.3; width: 3.7in; }
+  .th-top { display: flex; justify-content: space-between; align-items: center; border-bottom: 2px solid #000; padding-bottom: 4px; }
+  .th-logo { font-size: 18px; font-weight: 900; font-style: italic; }
+  .th-num { font-size: 16px; font-weight: 900; text-align: right; }
+  .th-date { font-size: 9px; text-align: right; }
+  .th-to { margin: 6px 0; padding: 6px; border: 1.5px solid #000; }
+  .th-to h4 { margin: 0 0 2px; font-size: 8px; letter-spacing: 1px; text-transform: uppercase; }
+  .th-to p { margin: 0; }
+  table.th-items { width: 100%; border-collapse: collapse; }
+  .th-items th { font-size: 8px; text-transform: uppercase; letter-spacing: 1px; text-align: left; border-bottom: 1.5px solid #000; padding: 3px 2px; }
+  .th-items td { border-bottom: 1px solid #000; padding: 4px 2px; vertical-align: top; }
+  .th-items .q { text-align: center; font-weight: 900; font-size: 12px; width: 34px; }
+  .th-items .c { width: 14px; }
+  .th-box { width: 11px; height: 11px; border: 1.5px solid #000; display: inline-block; }
+  .th-small { font-size: 8px; }
+  .th-foot { margin-top: 6px; border-top: 2px solid #000; padding-top: 4px; font-size: 9px; text-align: center; }
+</style>
+
+<div class="th">
+  <div class="th-top">
+    <div class="th-logo">{{ shop.name | upcase }}</div>
+    <div><div class="th-num">{{ order.name }}</div><div class="th-date">{{ order.created_at | date: "%m/%d/%Y" }}</div></div>
+  </div>
+
+  <div class="th-to">
+    <h4>Ship to</h4>
+    {% if shipping_address != blank %}
+      <p><strong>{{ shipping_address.name }}</strong></p>
+      <p>{{ shipping_address.address1 }}{% if shipping_address.address2 != blank %}, {{ shipping_address.address2 }}{% endif %}</p>
+      <p>{{ shipping_address.city_province_zip }}, {{ shipping_address.country }}</p>
+    {% endif %}
+  </div>
+
+  <table class="th-items">
+    <thead><tr><th class="c"></th><th>Item</th><th class="q">Qty</th></tr></thead>
+    <tbody>
+      {% for line_item in line_items_in_shipment %}
+      <tr>
+        <td class="c"><span class="th-box"></span></td>
+        <td><strong>{{ line_item.title }}</strong>{% if line_item.variant_title != blank %}<br><span class="th-small">{{ line_item.variant_title }}</span>{% endif %}{% if line_item.sku != blank %}<br><span class="th-small">SKU {{ line_item.sku }}</span>{% endif %}</td>
+        <td class="q">{{ line_item.shipping_quantity }}</td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+
+  {% unless includes_all_line_items_in_order %}<p class="th-small"><strong>Partial shipment:</strong> other items ship separately.</p>{% endunless %}
+  {% if order.note != blank %}<p class="th-small"><strong>Note:</strong> {{ order.note }}</p>{% endif %}
+
+  <div class="th-foot">Torque all bolts to spec · Bleed if lines were opened · Bed in pads<br><strong>Thanks for riding {{ shop.name }}</strong> · {{ shop.domain }}</div>
+</div>

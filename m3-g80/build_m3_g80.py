@@ -636,7 +636,7 @@ cy.transmission_bounces = 4
 cy.sample_clamp_indirect = 8
 scene.render.film_transparent = False
 scene.render.image_settings.file_format = "PNG"
-scene.render.image_settings.color_depth = "16" if MODE == "final" else "8"
+scene.render.image_settings.color_depth = "8"
 scene.render.filter_size = 1.2
 try:
     scene.view_settings.view_transform = "AgX"
@@ -646,7 +646,7 @@ except Exception:
 scene.view_settings.exposure = 0.0
 if MODE == "final":
     scene.render.resolution_x, scene.render.resolution_y = 1920, 1080
-    cy.samples = 160
+    cy.samples = int(os.environ.get('M3_SAMPLES', 160))
 else:
     scene.render.resolution_x, scene.render.resolution_y = 960, 540
     cy.samples = 48
